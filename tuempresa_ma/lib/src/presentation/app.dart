@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/homepage.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/login_page.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/testpage.dart';
 
 import 'theme_cubit.dart';
@@ -30,7 +30,7 @@ class AppView extends StatelessWidget {
           theme: theme,
           initialRoute: '/',
           routes: {
-            '/': (context) => const Homepage(),
+            '/': (context) => const LoginPage(),
             'testpage': (context) => TestPage(),
           },
         );

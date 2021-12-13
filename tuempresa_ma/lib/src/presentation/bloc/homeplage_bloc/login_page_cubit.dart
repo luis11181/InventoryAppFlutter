@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/homepage_state.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/login_page_state.dart';
 
-class HomepageCubit extends Cubit<HomepageState> {
-  HomepageCubit() : super(HomepageState());
+class LoginPageCubit extends Cubit<LoginPageState> {
+  LoginPageCubit() : super(LoginPageState());
 
   void inputName(String newName) {
     state.username = newName;
@@ -15,7 +15,7 @@ class HomepageCubit extends Cubit<HomepageState> {
     emit(state);
   }
 
-  void submit(BuildContext context) {
+  void login(BuildContext context) {
     Navigator.pushNamed(context, 'testpage',
         arguments: state.username + ' ' + state.password);
   }
