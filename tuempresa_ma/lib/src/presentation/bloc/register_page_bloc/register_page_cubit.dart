@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../data/authentication.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page_state.dart';
+import 'package:tuempresa_ma/src/data/authentication.dart';
+
+
+
 
 class RegisterPageCubit extends Cubit<RegisterPageState> {
   RegisterPageCubit() : super(RegisterPageState());
@@ -45,6 +49,8 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
     final isReady = key.currentState!.validate();
     state.readyToSubmit = isReady;
     if (isReady) {
+      registerUser(state.name, state.lastName, state.username, state.email,
+          state.enterpriseName, state.password);
       Navigator.pushNamed(context, 'testpage',
           arguments: state.name +
               '\n' +
