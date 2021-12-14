@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page_cubit.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page_state.dart';
 
-import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/login_page_cubit.dart';
-import 'package:tuempresa_ma/src/presentation/bloc/homeplage_bloc/login_page_state.dart';
 import 'package:tuempresa_ma/src/presentation/theme_cubit.dart';
 
 class LoginPageView extends StatelessWidget {
@@ -55,7 +55,7 @@ class LoginPageView extends StatelessWidget {
                   ),
                   initialValue: state.username,
                   onChanged: (text) =>
-                      context.read<LoginPageCubit>().inputName(text),
+                      context.read<LoginPageCubit>().inputUsername(text),
                 ),
               ),
               Padding(
@@ -92,8 +92,9 @@ class LoginPageView extends StatelessWidget {
               ),
               Divider(),
               ElevatedButton(
-                onPressed: () {},
-                child: const Text('Crear nueva cuenta'),
+                onPressed: () =>
+                    context.read<LoginPageCubit>().goRegister(context),
+                child: const Text('Registrate'),
               ),
             ],
           );
@@ -101,6 +102,7 @@ class LoginPageView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.brightness_6),
+        mini: true,
         onPressed: () => context.read<ThemeCubit>().toggleTheme(),
       ),
     );
