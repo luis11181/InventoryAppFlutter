@@ -1,8 +1,7 @@
 name: tuempresa_ma
 description: La aplicación que busca facilitar el manejo de inventarios.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -13,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.0.0
   get_it: ^7.2.0
@@ -22,12 +20,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  firebase_auth: ^3.3.3
+  cloud_functions: ^3.2.3
+  firebase_storage: ^10.2.3
+  cloud_firestore: ^3.1.4
+  firebase_core: ^1.10.5
 
   flutter_lints: ^1.0.0
-
 
 flutter:
   assets:
     - assets/img/
   uses-material-design: true
-
