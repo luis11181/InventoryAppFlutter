@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-//* FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseAuth auth = FirebaseAuth.instance;
 
-registerUser (name, lastName, username, email, enterpriseName, password) async { 
-    try {
+Future<void> registerUser (String name,String lastName,String username,String email,String enterpriseName,String password) async { 
+      try {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: lastName
+      email: "barry.allen@example.com",
+      password: "SuperSecretPassword!"
     );
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

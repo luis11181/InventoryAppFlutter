@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page_state.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuempresa_ma/src/data/authentication.dart';
 
 class RegisterPageCubit extends Cubit<RegisterPageState> {
@@ -43,11 +43,26 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
     emit(state);
   }
 
-  void register(BuildContext context, GlobalKey<FormState> key) {
+  Future<void> register(BuildContext context, GlobalKey<FormState> key) async {
     final isReady = key.currentState!.validate();
+    print(isReady);
     state.readyToSubmit = isReady;
     if (isReady) {
-      registerUser(state.name, state.lastName, state.username, state.email, state.enterpriseName, state.password);
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: "barry.allen@example.com",
+                password: "SuperSecretPassword!");
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
+
       Navigator.pushNamed(context, 'testpage',
           arguments: state.name +
               '\n' +
