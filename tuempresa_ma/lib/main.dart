@@ -6,7 +6,7 @@ import 'package:tuempresa_ma/src/presentation/app.dart';
 import 'package:tuempresa_ma/src/presentation/app_bloc_observer.dart';
 
 Future<void> main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   BlocOverrides.runZoned(
     () => runApp(const App()),
