@@ -38,6 +38,7 @@ class LoginPageView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Correo del Usuario',
                     enabledBorder: OutlineInputBorder(
@@ -53,7 +54,8 @@ class LoginPageView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  initialValue: state.username,//* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
+                  initialValue: state
+                      .username, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
                   onChanged: (text) =>
                       context.read<LoginPageCubit>().inputUsername(text),
                 ),

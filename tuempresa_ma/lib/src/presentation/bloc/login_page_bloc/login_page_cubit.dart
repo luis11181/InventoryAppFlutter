@@ -25,11 +25,10 @@ class LoginPageCubit extends Cubit<LoginPageState> {
     if (shouldNavigate) {
       //TODO SAVE THE COMPANY NAME AS GLOBAL STATE, SO IT CAN BE USED IN ALL QUERIES, SE CREO LA FUNCION , PERO ESTA NO SIRVE PQ RECIBE UN FUTURO  Y NO UN STRING
 
-      String companyName =
-          'ddd'; //await  getCompanyName(state.username);//username es el correo en este caso
-      getCompanyName(state.username);
+      //String companyName = 'ddd'; //await  getCompanyName(state.username);//username es el correo en este caso
+      //getCompanyName(state.username);
       Navigator.pushNamed(context, 'scanpage',
-          arguments: state.username + ' ' + state.password + ' ' + companyName);
+          arguments: state.username + ' ' + state.password);
     } else {
       //TODO show error IN SCREEN
     }
