@@ -45,25 +45,16 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
   Future<void> register(BuildContext context, GlobalKey<FormState> key) async {
     final isReady = key.currentState!.validate();
+    // ignore: avoid_print
     print(isReady);
     state.readyToSubmit = isReady;
     if (isReady) {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: "barry.allen@example.com",
-                password: "SuperSecretPassword!");
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
-        } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
-        }
-      } catch (e) {
-        print(e);
-      }
 
-      Navigator.pushNamed(context, 'testpage',
+      signUp(state.email, state.password, state.name, state.lastName, state.username, state.enterpriseName);
+
+      //createBussiness(state.enterpriseName);
+
+          Navigator.pushNamed(context, 'testpage',
           arguments: state.name +
               '\n' +
               state.lastName +
@@ -75,7 +66,10 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
               state.enterpriseName +
               '\n' +
               state.password);
+      }
+
+
     }
     emit(state);
   }
-}
+
