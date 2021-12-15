@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuempresa_ma/src/data/authentication.dart';
+import 'package:tuempresa_ma/src/data/store.dart';
 
 class RegisterPageCubit extends Cubit<RegisterPageState> {
   RegisterPageCubit() : super(RegisterPageState());
@@ -50,23 +51,33 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
     state.readyToSubmit = isReady;
     if (isReady) {
 
-      signUp(state.email, state.password, state.name, state.lastName, state.username, state.enterpriseName);
+      final resolve = await signUp(state.email, state.password, state.name, state.lastName, state.username, state.enterpriseName);
+
+      addUser(state.name, state.lastName, state.enterpriseName, state.email, state.username );
+
+      addEmpresa(state.name, state.lastName, state.enterpriseName, state.email, state.username );
 
       //createBussiness(state.enterpriseName);
-
-          Navigator.pushNamed(context, 'testpage',
-          arguments: state.name +
-              '\n' +
-              state.lastName +
-              '\n' +
-              state.username +
-              '\n' +
-              state.email +
-              '\n' +
-              state.enterpriseName +
-              '\n' +
-              state.password);
-      }
+      if (resolve=='funciono') {
+  
+        Navigator.pushNamed(context, 'testpage',
+            arguments: state.name +
+                '\n' +
+                state.lastName +
+                '\n' +
+                state.username +
+                '\n' +
+                state.email +
+                '\n' +
+                state.enterpriseName +
+                '\n' +
+                state.password);
+        }
+        else{
+          //*imprimir error en pantalla
+          //TODO implementar error en pantalla
+        }
+     }
 
 
     }

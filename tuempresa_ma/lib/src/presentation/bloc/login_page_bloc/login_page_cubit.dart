@@ -25,6 +25,8 @@ class LoginPageCubit extends Cubit<LoginPageState> {
     if (shouldNavigate) {
       Navigator.pushNamed(context, 'testpage',
           arguments: state.username + ' ' + state.password);
+    } else {
+      //TODO show error IN SCREEN
     }
   }
 
