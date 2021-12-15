@@ -28,7 +28,7 @@ class LoginPageCubit extends Cubit<LoginPageState> {
       //final companyName = getCompanyName(state.username);//username es el correo en este caso
 
 
-      Navigator.pushNamed(context, 'testpage',
+      Navigator.pushNamed(context, 'scanpage',
           arguments: state.username + ' ' + state.password);
     } else {
       //TODO show error IN SCREEN

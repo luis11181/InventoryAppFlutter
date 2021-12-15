@@ -4,6 +4,7 @@ import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page.da
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page.dart';
 
 import 'package:tuempresa_ma/src/presentation/bloc/testpage.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/scanpage.dart';
 
 import 'theme_cubit.dart';
 
@@ -35,6 +36,7 @@ class AppView extends StatelessWidget {
             '/': (context) => const LoginPage(),
             'register': (context) => const RegisterPage(),
             'testpage': (context) => TestPage(),
+            'scanpage': (context) => scanPage(),
           },
         );
       },
