@@ -38,7 +38,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     //FIXME: //*no pude pasar el estado que llevaba de la pagina sign in
-    final args = 'aaa'; //ModalRoute.of(context)!.settings.arguments as String;
+    final args;
+    if (ModalRoute.of(context)!.settings.arguments == null) {
+      args = 'nulo, no se recibieron valores';
+    } else {
+      args = ModalRoute.of(context)!.settings.arguments as String;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Scan QR or Barcode of your product'),
