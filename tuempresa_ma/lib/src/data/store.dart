@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+//dbRef.collection("Table").where("exObject.dataToQuery", "==", "value")
 CollectionReference users = FirebaseFirestore.instance.collection('empleados');
 
 Future<void> addUser(String name, String lastName, String company, String email,

@@ -22,10 +22,14 @@ class LoginPageCubit extends Cubit<LoginPageState> {
     //* dice que recibe el username, pero se requiere el password por eso se cambio el texto que ve el ususario, uy realmente recibe es el correo, por lo tanto la funcion sign in funciona asi
     bool shouldNavigate = await signIn(state.username, state.password);
     var companyName = await getCompanyName(state.username);
+    var name = await getName(state.username);
+
     if (shouldNavigate == true && companyName != null) {
+
+      var states = {'company': companyName, 'name': name, 'email': state.username};
      
       Navigator.pushNamed(context, 'scanpage',
-          arguments: state.username + ' ' + state.password + ' ' + companyName);
+          arguments: states);
     } else {
       //TODO show error IN SCREEN
     }

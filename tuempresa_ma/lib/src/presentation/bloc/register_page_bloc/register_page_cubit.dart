@@ -59,21 +59,11 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
 
       //createBussiness(state.enterpriseName);
       if (resolve=='funciono') {
-
-        //TODO SAVE THE COMPANY NAME AS GLOBAL STATE, SO IT CAN BE USED IN ALL QUERIES
   
-        Navigator.pushNamed(context, 'testpage',
-            arguments: state.name +
-                '\n' +
-                state.lastName +
-                '\n' +
-                state.username +
-                '\n' +
-                state.email +
-                '\n' +
-                state.enterpriseName +
-                '\n' +
-                state.password);
+        var states = {'company': state.enterpriseName, 'name': state.name, 'email': state.email};
+        
+        Navigator.pushNamed(context, 'testpage', 
+            arguments: states);
         }
         else{
           //*imprimir error en pantalla

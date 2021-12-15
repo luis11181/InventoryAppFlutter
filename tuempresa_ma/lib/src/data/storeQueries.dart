@@ -23,3 +23,28 @@ Future<dynamic> getCompanyName(String email) async {
 
   return companyName;
 }
+
+
+//* query to get the name from the email of a specific user
+Future<dynamic> getName(String email) async {
+  // Call the user's CollectionReference to add a new user
+  var Name;
+
+  Name = await FirebaseFirestore.instance
+      .collection('empleados')
+      .where('email', isEqualTo: email)
+      .get()
+      .then((snapshot) async {
+        if (snapshot.docs[0].data()["name"] != null) {
+           return await snapshot.docs[0].data()["name"];
+        } else {
+          return null;
+        }  
+
+  }).catchError((e) {
+    print(e);
+    return null;
+  });
+
+  return Name;
+}
