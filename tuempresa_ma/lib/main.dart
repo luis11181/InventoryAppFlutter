@@ -13,3 +13,5 @@ Future<void> main() async {
     blocObserver: AppBlocObserver(),
   );
 }
+
+//* logs in terminal:  adb logcat | findstr flutter
