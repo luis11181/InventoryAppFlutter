@@ -37,11 +37,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO no pude pasar el estado que llevaba de la pagina sign in
+    //FIXME: //*no pude pasar el estado que llevaba de la pagina sign in
     final args = 'aaa'; //ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Plugin example app'),
+        title: Text('Scan QR or Barcode of your product'),
       ),
       body: Center(
         child: Column(
@@ -62,9 +62,9 @@ class _MyAppState extends State<MyApp> {
                             qrCodeCallback: (code) {
                               setState(() {
                                 if (code != null) {
-                                  //qr = code;
+                                  qr = code;
                                 } else {
-                                  //qr = 'no code';
+                                  qr = 'no code';
                                 }
                               });
                             },
