@@ -21,7 +21,7 @@ class LoginPageView extends StatelessWidget {
       appBar: AppBar(title: const Text('Login')),
       body: BlocBuilder<LoginPageCubit, LoginPageState>(
         builder: (context, state) {
-          return state is WaitingState
+          return state is LoginWaitingState
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -43,7 +43,7 @@ class LoginPageView extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        initialValue: (state as InputState).email,
+                        initialValue: (state as LoginInputState).email,
                         decoration: InputDecoration(
                           labelText: 'Correo del Usuario',
                           enabledBorder: OutlineInputBorder(
@@ -67,7 +67,7 @@ class LoginPageView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: TextFormField(
-                        initialValue: (state as InputState).password,
+                        initialValue: (state as LoginInputState).password,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',

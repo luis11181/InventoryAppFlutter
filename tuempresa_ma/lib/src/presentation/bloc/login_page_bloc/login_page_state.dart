@@ -1,9 +1,9 @@
 abstract class LoginPageState {}
 
-class WaitingState implements LoginPageState {}
+class LoginWaitingState implements LoginPageState {}
 
-class InputState implements LoginPageState {
-  InputState({
+class LoginInputState implements LoginPageState {
+  LoginInputState({
     this.email = '',
     this.password = '',
   });

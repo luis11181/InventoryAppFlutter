@@ -7,27 +7,27 @@ import 'package:tuempresa_ma/src/data/authentication.dart';
 import 'package:tuempresa_ma/src/data/storeQueries.dart';
 
 class LoginPageCubit extends Cubit<LoginPageState> {
-  LoginPageCubit() : super(InputState());
+  LoginPageCubit() : super(LoginInputState());
 
   void inputUsername(String newUsername) {
-    if (state is InputState) {
-      (state as InputState).email = newUsername;
+    if (state is LoginInputState) {
+      (state as LoginInputState).email = newUsername;
       emit(state);
     }
   }
 
   void inputPassword(String newPassword) {
-    if (state is InputState) {
-      (state as InputState).password = newPassword;
+    if (state is LoginInputState) {
+      (state as LoginInputState).password = newPassword;
       emit(state);
     }
   }
 
   Future<void> login(BuildContext context) async {
-    if (state is InputState) {
-      final email = (state as InputState).email;
-      final password = (state as InputState).password;
-      emit(WaitingState());
+    if (state is LoginInputState) {
+      final email = (state as LoginInputState).email;
+      final password = (state as LoginInputState).password;
+      emit(LoginWaitingState());
       bool shouldNavigate = await signIn(email, password);
       if (shouldNavigate) {
         //TODO SAVE THE COMPANY NAME AS GLOBAL STATE, SO IT CAN BE USED IN ALL QUERIES, SE CREO LA FUNCION , PERO ESTA NO SIRVE PQ RECIBE UN FUTURO  Y NO UN STRING
@@ -37,9 +37,9 @@ class LoginPageCubit extends Cubit<LoginPageState> {
 
         Navigator.pushNamed(context, 'testpage',
             arguments: email + ' ' + password);
-        emit(InputState());
+        emit(LoginInputState());
       } else {
-        emit(InputState(email: email, password: password));
+        emit(LoginInputState(email: email, password: password));
         final snackBar = SnackBar(
           //TODO especificar error
           content: Text('Error'),
