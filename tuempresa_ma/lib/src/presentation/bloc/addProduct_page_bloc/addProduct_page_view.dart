@@ -38,7 +38,7 @@ class AddProductPageView extends StatelessWidget {
               Text('el codigo es: $code'),
             
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(5.0),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
