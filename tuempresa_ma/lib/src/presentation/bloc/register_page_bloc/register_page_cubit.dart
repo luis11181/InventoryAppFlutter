@@ -62,7 +62,7 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
   
         var states = {'company': state.enterpriseName, 'name': state.name, 'email': state.email};
         
-        Navigator.pushNamed(context, 'testpage', 
+        Navigator.pushNamed(context, 'scanpage', 
             arguments: states);
         }
         else{
