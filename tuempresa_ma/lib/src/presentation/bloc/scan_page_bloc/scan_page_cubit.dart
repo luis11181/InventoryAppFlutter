@@ -32,6 +32,7 @@ class ScanPageCubit extends Cubit<ScanPageState> {
       
     }
   }
+  //df
 
   void activateCamera() {
     state.isCamActive = true;
