@@ -62,22 +62,20 @@ class AddProductPageView extends StatelessWidget {
                       context.read<AddProductPageCubit>().inputcantidad(number),
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 120.0),
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () =>
-                            context.read<AddProductPageCubit>().changeCantidad(context, 'restar'),
-                        child: const Text('Retirar'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () =>
-                            context.read<AddProductPageCubit>().changeCantidad(context, 'sumar'),
-                        child: const Text('Añadir'),
-                      ),
-                    ],
-                  )),
+              Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () =>
+                        context.read<AddProductPageCubit>().changeCantidad(context, 'restar'),
+                    child: const Text('Retirar'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () =>
+                        context.read<AddProductPageCubit>().changeCantidad(context, 'sumar'),
+                    child: const Text('Añadir'),
+                  ),
+                ],
+              ),
             ],
           );
         },

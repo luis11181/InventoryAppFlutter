@@ -5,7 +5,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String;
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    String name = args['name'].toString();
+    String company = args['company'].toString();
+    String email = args['email'].toString();
+
+    var states = {'company': company, 'name': name, 'email': email};
+
+
     return Scaffold(
       appBar: AppBar(title: const Text('Homepage')),
       body: Center(
@@ -14,7 +22,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Bienvenido Usuario',
+                'Bienvenido $name',
                 style: Theme.of(context).textTheme.headline4,
               ),
             ),
@@ -87,6 +95,9 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+
+          Navigator.pushNamed(context, 'scanpage', 
+            arguments: states);
           // Add your onPressed code here!
         },
         label: const Text(

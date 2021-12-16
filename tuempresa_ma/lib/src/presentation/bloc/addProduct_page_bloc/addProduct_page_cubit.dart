@@ -17,6 +17,7 @@ class AddProductPageCubit extends Cubit<AddProductPageState> {
     var cantidad = int.parse(state.cantidad);
 
     final args = ModalRoute.of(context)!.settings.arguments as Map;
+    
 
     String company = args["company"].toString();
 
@@ -27,5 +28,10 @@ class AddProductPageCubit extends Cubit<AddProductPageState> {
     }
 
     updateCantidad(company, cantidad, code);
+
+
+    //var states = {'company': enterpriseName, 'name': name, 'email': email};
+    Navigator.popUntil(context, ModalRoute.withName('homepage'));
+
   }
 }

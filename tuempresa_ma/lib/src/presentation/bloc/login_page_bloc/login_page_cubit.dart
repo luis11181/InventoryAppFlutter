@@ -37,7 +37,7 @@ class LoginPageCubit extends Cubit<LoginPageState> {
 
       var states = {'company': companyName, 'name': name, 'email': email};
      
-      Navigator.pushNamed(context, 'scanpage',
+      Navigator.pushNamed(context, 'homepage',
           arguments: states);
 
         emit(LoginInputState());
