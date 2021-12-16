@@ -21,85 +21,90 @@ class LoginPageView extends StatelessWidget {
       appBar: AppBar(title: const Text('Login')),
       body: BlocBuilder<LoginPageCubit, LoginPageState>(
         builder: (context, state) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'TuEmpresa',
-                style: TextStyle(
-                    fontSize: 30.0,
-                    color: Theme.of(context).colorScheme.primary),
-              ),
-              Image.asset(
-                'assets/img/warehouse-inventory-icon.png',
-                color: Theme.of(context).colorScheme.primary,
-                scale: 8.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'Correo del Usuario',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
+          return state is WaitingState
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'TuEmpresa',
+                      style: TextStyle(
+                          fontSize: 30.0,
                           color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
+                    Image.asset(
+                      'assets/img/warehouse-inventory-icon.png',
+                      color: Theme.of(context).colorScheme.primary,
+                      scale: 8.0,
                     ),
-                  ),
-                  initialValue: state
-                      .username, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
-                  onChanged: (text) =>
-                      context.read<LoginPageCubit>().inputUsername(text),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  obscureText: true,
-                  initialValue: state.password,
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        initialValue: (state as InputState).email,
+                        decoration: InputDecoration(
+                          labelText: 'Correo del Usuario',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
+                        onChanged: (text) =>
+                            context.read<LoginPageCubit>().inputUsername(text),
+                      ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextFormField(
+                        initialValue: (state as InputState).password,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Contraseña',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onChanged: (text) =>
+                            context.read<LoginPageCubit>().inputPassword(text),
+                      ),
                     ),
-                  ),
-                  onChanged: (text) =>
-                      context.read<LoginPageCubit>().inputPassword(text),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => context.read<LoginPageCubit>().login(context),
-                child: const Text('Iniciar Sesión'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('¿Olvidaste tu contraseña?'),
-              ),
-              Divider(),
-              ElevatedButton(
-                onPressed: () =>
-                    context.read<LoginPageCubit>().goRegister(context),
-                child: const Text('Registrate'),
-              ),
-            ],
-          );
+                    ElevatedButton(
+                      onPressed: () =>
+                          context.read<LoginPageCubit>().login(context),
+                      child: const Text('Iniciar Sesión'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('¿Olvidaste tu contraseña?'),
+                    ),
+                    Divider(),
+                    ElevatedButton(
+                      onPressed: () =>
+                          context.read<LoginPageCubit>().goRegister(context),
+                      child: const Text('Registrate'),
+                    ),
+                  ],
+                );
         },
       ),
       floatingActionButton: FloatingActionButton(
