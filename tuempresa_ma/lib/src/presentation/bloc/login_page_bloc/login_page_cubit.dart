@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page_state.dart';
 
@@ -6,32 +7,48 @@ import 'package:tuempresa_ma/src/data/authentication.dart';
 import 'package:tuempresa_ma/src/data/storeQueries.dart';
 
 class LoginPageCubit extends Cubit<LoginPageState> {
-  LoginPageCubit() : super(LoginPageState());
+  LoginPageCubit() : super(LoginInputState());
 
   void inputUsername(String newUsername) {
-    state.username = newUsername;
-    emit(state);
+    if (state is LoginInputState) {
+      (state as LoginInputState).email = newUsername;
+      emit(state);
+    }
   }
 
   void inputPassword(String newPassword) {
-    state.password = newPassword;
-    emit(state);
+    if (state is LoginInputState) {
+      (state as LoginInputState).password = newPassword;
+      emit(state);
+    }
   }
 
   Future<void> login(BuildContext context) async {
-    //* dice que recibe el username, pero se requiere el password por eso se cambio el texto que ve el ususario, uy realmente recibe es el correo, por lo tanto la funcion sign in funciona asi
-    bool shouldNavigate = await signIn(state.username, state.password);
-    var companyName = await getCompanyName(state.username);
-    var name = await getName(state.username);
+    if (state is LoginInputState) {
+      final email = (state as LoginInputState).email;
+      final password = (state as LoginInputState).password;
+      emit(LoginWaitingState());
+
+    bool shouldNavigate = await signIn(email, password);
+    var companyName = await getCompanyName(email);
+    var name = await getName(email);
 
     if (shouldNavigate == true && companyName != null) {
 
-      var states = {'company': companyName, 'name': name, 'email': state.username};
+      var states = {'company': companyName, 'name': name, 'email': email};
      
       Navigator.pushNamed(context, 'scanpage',
           arguments: states);
-    } else {
-      //TODO show error IN SCREEN
+
+        emit(LoginInputState());
+      } else {
+        emit(LoginInputState(email: email, password: password));
+        final snackBar = SnackBar(
+          //TODO especificar error
+          content: Text('Error'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 

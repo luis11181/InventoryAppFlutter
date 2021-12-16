@@ -1,15 +1,13 @@
-import 'package:equatable/equatable.dart';
+abstract class LoginPageState {}
 
-// ignore: must_be_immutable
-class LoginPageState extends Equatable {
-  LoginPageState({
-    this.username = '',
+class LoginWaitingState implements LoginPageState {}
+
+class LoginInputState implements LoginPageState {
+  LoginInputState({
+    this.email = '',
     this.password = '',
   });
 
-  String username;
+  String email;
   String password;
-
-  @override
-  List<Object?> get props => [username, password];
 }

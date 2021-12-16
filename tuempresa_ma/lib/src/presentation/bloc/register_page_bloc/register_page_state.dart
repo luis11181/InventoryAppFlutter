@@ -1,10 +1,10 @@
-import 'dart:ffi';
+abstract class RegisterPageState {}
 
-import 'package:equatable/equatable.dart';
+class RegisterWaitingState implements RegisterPageState {}
 
 // ignore: must_be_immutable
-class RegisterPageState extends Equatable {
-  RegisterPageState({
+class RegisterInputState implements RegisterPageState {
+  RegisterInputState({
     this.name = '',
     this.lastName = '',
     this.username = '',
@@ -22,7 +22,4 @@ class RegisterPageState extends Equatable {
   String password;
   String confirmPassword;
   bool readyToSubmit;
-
-  @override
-  List<Object?> get props => [username, password];
 }
