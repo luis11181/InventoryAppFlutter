@@ -3,13 +3,12 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class AddProductPageState extends Equatable {
   AddProductPageState({
-    this.username = '',
-    this.password = '',
+    this.cantidad ='0',
+    
   });
 
-  String username;
-  String password;
+  String cantidad;
 
   @override
-  List<Object?> get props => [username, password];
+  List<Object?> get props => [cantidad];
 }

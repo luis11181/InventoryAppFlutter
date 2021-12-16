@@ -34,7 +34,7 @@ class AppView extends StatelessWidget {
           theme: theme,
           initialRoute: '/',
           routes: {
-            '/': (context) => const LoginPage(),
+            '/': (context) => const  LoginPage(),
             'register': (context) => const RegisterPage(),
             'testpage': (context) => TestPage(),
             'scanpage': (context) => const ScanPage(),

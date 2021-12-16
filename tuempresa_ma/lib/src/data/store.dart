@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tuempresa_ma/src/data/store.dart';
+import 'package:tuempresa_ma/src/data/storeQueries.dart';
+
 //dbRef.collection("Table").where("exObject.dataToQuery", "==", "value")
 CollectionReference users = FirebaseFirestore.instance.collection('empleados');
 
@@ -32,3 +35,5 @@ Future<void> addEmpresa(
       .then((value) => print("'full_name' & 'age' merged with existing data!"))
       .catchError((error) => print("Failed to merge data: $error"));
 }
+
+

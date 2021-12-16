@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,14 @@ class AddProductPageView extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    String code = args["code"].toString();
+
+    
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Add Product')),
@@ -24,23 +34,15 @@ class AddProductPageView extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'TuEmpresa',
-                style: TextStyle(
-                    fontSize: 30.0,
-                    color: Theme.of(context).colorScheme.primary),
-              ),
-              Image.asset(
-                'assets/img/warehouse-inventory-icon.png',
-                color: Theme.of(context).colorScheme.primary,
-                scale: 8.0,
-              ),
+
+              Text('el codigo es: $code'),
+            
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'Correo del Usuario',
+                    labelText: 'Cantidad a agregar o disminuir',
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 3,
@@ -55,49 +57,27 @@ class AddProductPageView extends StatelessWidget {
                     ),
                   ),
                   initialValue: state
-                      .username, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
-                  onChanged: (text) =>
-                      context.read<AddProductPageCubit>().inputUsername(text),
+                      .cantidad, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
+                  onChanged: (number) =>
+                      context.read<AddProductPageCubit>().inputcantidad(number),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  obscureText: true,
-                  initialValue: state.password,
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  onChanged: (text) =>
-                      context.read<AddProductPageCubit>().inputPassword(text),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => context.read<AddProductPageCubit>().login(context),
-                child: const Text('Iniciar Sesión'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('¿Olvidaste tu contraseña?'),
-              ),
-              Divider(),
-              ElevatedButton(
-                onPressed: () =>
-                    context.read<AddProductPageCubit>().goRegister(context),
-                child: const Text('Registrate'),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 120.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<AddProductPageCubit>().changeCantidad(context, 'restar'),
+                        child: const Text('Retirar'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<AddProductPageCubit>().changeCantidad(context, 'sumar'),
+                        child: const Text('Añadir'),
+                      ),
+                    ],
+                  )),
             ],
           );
         },

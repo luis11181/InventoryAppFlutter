@@ -10,12 +10,11 @@ Future<dynamic> getCompanyName(String email) async {
       .where('email', isEqualTo: email)
       .get()
       .then((snapshot) async {
-        if (snapshot.docs[0].data()["company"] != null) {
-           return await snapshot.docs[0].data()["company"];
-        } else {
-          return null;
-        }  
-
+    if (snapshot.docs[0].data()["company"] != null) {
+      return await snapshot.docs[0].data()["company"];
+    } else {
+      return null;
+    }
   }).catchError((e) {
     print(e);
     return null;
@@ -23,7 +22,6 @@ Future<dynamic> getCompanyName(String email) async {
 
   return companyName;
 }
-
 
 //* query to get the name from the email of a specific user
 Future<dynamic> getName(String email) async {
@@ -35,16 +33,28 @@ Future<dynamic> getName(String email) async {
       .where('email', isEqualTo: email)
       .get()
       .then((snapshot) async {
-        if (snapshot.docs[0].data()["name"] != null) {
-           return await snapshot.docs[0].data()["name"];
-        } else {
-          return null;
-        }  
-
+    if (snapshot.docs[0].data()["name"] != null) {
+      return await snapshot.docs[0].data()["name"];
+    } else {
+      return null;
+    }
   }).catchError((e) {
     print(e);
     return null;
   });
 
   return Name;
+}
+
+CollectionReference empresas =
+    FirebaseFirestore.instance.collection('empresas');
+
+Future<void> updateCantidad(
+    String company, int cantidad, String code) async {
+  
+  return empresas
+      .doc(company)
+      .update({'$code.cantidad': FieldValue.increment(cantidad)})
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
 }

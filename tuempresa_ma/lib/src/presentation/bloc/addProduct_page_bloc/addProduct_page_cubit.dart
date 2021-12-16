@@ -8,34 +8,24 @@ import 'package:tuempresa_ma/src/data/storeQueries.dart';
 class AddProductPageCubit extends Cubit<AddProductPageState> {
   AddProductPageCubit() : super(AddProductPageState());
 
-  void inputUsername(String newUsername) {
-    state.username = newUsername;
+  void inputcantidad(String cantidad) {
+    state.cantidad = cantidad;
     emit(state);
   }
 
-  void inputPassword(String newPassword) {
-    state.password = newPassword;
-    emit(state);
-  }
+  Future<void> changeCantidad(BuildContext context, String operacion) async {
+    var cantidad = int.parse(state.cantidad);
 
-  Future<void> login(BuildContext context) async {
-    //* dice que recibe el username, pero se requiere el password por eso se cambio el texto que ve el ususario, uy realmente recibe es el correo, por lo tanto la funcion sign in funciona asi
-    bool shouldNavigate = await signIn(state.username, state.password);
-    var companyName = await getCompanyName(state.username);
-    var name = await getName(state.username);
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
 
-    if (shouldNavigate == true && companyName != null) {
+    String company = args["company"].toString();
 
-      var states = {'company': companyName, 'name': name, 'email': state.username};
-     
-      Navigator.pushNamed(context, 'scanpage',
-          arguments: states);
-    } else {
-      //TODO show error IN SCREEN
+    String code = args["code"].toString();
+
+    if (operacion == 'restar') {
+      cantidad = cantidad * -1;
     }
-  }
 
-  void goRegister(BuildContext context) {
-    Navigator.pushNamed(context, 'register');
+    updateCantidad(company, cantidad, code);
   }
 }
