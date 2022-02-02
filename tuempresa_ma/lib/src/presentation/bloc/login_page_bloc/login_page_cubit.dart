@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page_state.dart';
 
 import 'package:tuempresa_ma/src/data/authentication.dart';
-import 'package:tuempresa_ma/src/data/storeQueries.dart';
+import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
+import 'package:tuempresa_ma/src/data/initFirebase.dart';
 
 class LoginPageCubit extends Cubit<LoginPageState> {
   LoginPageCubit() : super(LoginInputState());
@@ -37,8 +38,13 @@ class LoginPageCubit extends Cubit<LoginPageState> {
 
       var states = {'company': companyName, 'name': name, 'email': email};
      
-      Navigator.pushNamed(context, 'homepage',
-          arguments: states);
+      //Navigator.pushNamed(context, 'homepage',
+        //  arguments: states);
+          Navigator.pushNamed(
+        context,
+        'homepage',
+        arguments: states,
+      );
 
         emit(LoginInputState());
       } else {
