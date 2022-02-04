@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuempresa_ma/src/data/authentication.dart';
-import 'package:tuempresa_ma/src/data/store.dart';
+import 'package:tuempresa_ma/src/data/initFirebase.dart';
 
 class RegisterPageCubit extends Cubit<RegisterPageState> {
   RegisterPageCubit() : super(RegisterInputState());
@@ -77,9 +77,14 @@ class RegisterPageCubit extends Cubit<RegisterPageState> {
         final result = await signUp(
             email, password, name, lastName, username, enterpriseName);
 
+
+        //crea la tabla de usuarios dentro de la tabla empresa
         addUser(name, lastName, enterpriseName, email, username);
 
-        addEmpresa(name, lastName, enterpriseName, email, username);
+        //crea tabla de usuarios
+        addUser2(name, lastName, enterpriseName, email, username);
+
+        iniciarProductos(name, lastName, enterpriseName, email, username);
 
         //createBussiness(state.enterpriseName);
         if (result == 'funciono') {
