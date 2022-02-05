@@ -41,7 +41,7 @@ class ProductListPageView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Text(
                         'Resumen de productos',
                         textAlign: TextAlign.center,
@@ -51,11 +51,11 @@ class ProductListPageView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text(
                         'Busca un producto por su nombre',
                         style: Theme.of(context).textTheme.headline6,
-                        textAlign: TextAlign.center,
+                        // textAlign: TextAlign.center,
                       ),
                     ),
                     SizedBox(
@@ -67,7 +67,7 @@ class ProductListPageView extends StatelessWidget {
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(1.0),
                                 child: TextFormField(
                                   keyboardType: TextInputType.name,
                                   validator: validateName,
@@ -97,18 +97,19 @@ class ProductListPageView extends StatelessWidget {
                                       .inputProductName(text),
                                 ),
                               ),
+                              ElevatedButton(
+                                onPressed: () => context
+                                    .read<ProductListPageCubit>(),
+                                    /*.register(context, _formKey),*/
+                                child: const Icon(Icons.search),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: const EdgeInsets.all(2),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => context.read<ProductListPageCubit>(),
-                      /*.register(context, _formKey),*/
-                      child: const Icon(Icons.search),
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(2),                        
                       ),
                     ),
                   ],
