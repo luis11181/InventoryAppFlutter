@@ -107,11 +107,31 @@ Future<dynamic> getProducts(String company, int name, String email) async {
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
+  if (info.exists) {
+    //Map<String, dynamic>? result = info.data();
+
+    return info.data();
+  } else {
+    return null;
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+}
+
+//* query to get the info of products
+Future<dynamic> getAllProducts(String company, int name, String email) async {
+  var info;
+  info = await empresas
+      .doc(company)
+      .collection("productos")
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
 
 
   if (info.exists) {
-    Map<String, dynamic>? result = info.data();
-
     return info.data();
   } else {
     return null;

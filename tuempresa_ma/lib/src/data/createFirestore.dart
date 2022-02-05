@@ -85,13 +85,12 @@ Future<void> transaccion(String company, int cantidad, String code,
               "Failed to updated bodegas table fro transactionr: $error"));
     }
 
-
   return;
 }
 
 //! --------crear un nuevO producto .
 Future<void> crearProduct(String company, String code, String name,
-    String descripcion, String bodega, int precio, String unidad) async {
+    String descripcion, int precio, String unidad) async {
   return empresas
       // existing document in 'users' collection: "ABC123"
       .doc(company)
