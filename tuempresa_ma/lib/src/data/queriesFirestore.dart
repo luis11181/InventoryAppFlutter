@@ -98,7 +98,7 @@ Future<dynamic> getBodegaInfo(
 }
 
 //* query to get the info of products
-Future<dynamic> getProducts(String company, int name, String email) async {
+Future<dynamic> getProducts(String company, int name) async {
   var info;
   info = await empresas
       .doc(company)
@@ -121,7 +121,7 @@ Future<dynamic> getProducts(String company, int name, String email) async {
 }
 
 //* query to get the info of products
-Future<dynamic> getAllProducts(String company, int name, String email) async {
+Future<dynamic> getAllProducts(String company) async {
   var info;
   info = await empresas
       .doc(company)
