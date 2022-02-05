@@ -107,10 +107,10 @@ Future<dynamic> getProducts(String company, int name) async {
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
-  if (info.exists) {
-    //Map<String, dynamic>? result = info.data();
-
-    return info.data();
+  if (info != null) {
+    var xx =info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
   } else {
     return null;
   }
@@ -131,8 +131,10 @@ Future<dynamic> getAllProducts(String company) async {
 
 
 
-  if (info.exists) {
-    return info.data();
+  if (info != null) {
+    var xx =info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
   } else {
     return null;
   }
@@ -143,3 +145,61 @@ Future<dynamic> getAllProducts(String company) async {
 
 
 }
+
+
+//* query to get the info of products
+Future<dynamic> getAllTransactions(String company) async {
+  var info;
+  info = await empresas
+      .doc(company)
+      .collection("transacciones")
+      .limit(10)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    var xx =info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return null;
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+
+
+}
+
+
+//* query to get the info of products
+Future<dynamic> getTransactions(String company, String producto) async {
+  var info;
+  info = await empresas
+      .doc(company)
+      .collection("transacciones")
+      .where("producto", isEqualTo: producto)
+      .limit(10)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    var xx =info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return null;
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+
+
+}
+
+
+
+
+

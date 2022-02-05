@@ -7,6 +7,7 @@ import 'package:tuempresa_ma/src/presentation/bloc/scan_page_bloc/scan_page.dart
 import 'package:tuempresa_ma/src/presentation/bloc/testpage.dart';
 import 'package:tuempresa_ma/src/presentation/home_page.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/addProduct_page_bloc/addProduct_page.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/transaction_page_bloc/transaction_page.dart';
 
 import 'theme_cubit.dart';
 
@@ -41,6 +42,7 @@ class AppView extends StatelessWidget {
             'testpage': (context) => const TestPage(),
             'scanpage': (context) => const ScanPage(),
             'addProduct': (context) => const AddProductPage(),
+            'transaction': (context) => const TransactionPage(),
           },
         );
       },
