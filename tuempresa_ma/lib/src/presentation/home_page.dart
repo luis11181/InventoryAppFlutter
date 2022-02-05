@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
 
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Homepage')),
+      appBar: AppBar(title: const Text('Homepage'),automaticallyImplyLeading: false),
       body: Center(
         child: Column(
           children: [
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
 
-          Navigator.pushNamed(context, 'scanpage', 
+          Navigator.pushNamed(context, 'addProduct',
             arguments: states);
           // Add your onPressed code here!
         },

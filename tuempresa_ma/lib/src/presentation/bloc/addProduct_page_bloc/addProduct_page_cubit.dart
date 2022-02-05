@@ -6,15 +6,15 @@ import 'package:tuempresa_ma/src/data/authentication.dart';
 import 'package:tuempresa_ma/src/data/storeQueries.dart';
 
 class AddProductPageCubit extends Cubit<AddProductPageState> {
-  AddProductPageCubit() : super(AddProductPageState());
+  AddProductPageCubit() : super(AddProductPageState(nombre: "nombre"));
 
-  void inputcantidad(String cantidad) {
+  void inputcantidad(int cantidad) {
     state.cantidad = cantidad;
     emit(state);
   }
 
   Future<void> changeCantidad(BuildContext context, String operacion) async {
-    var cantidad = int.parse(state.cantidad);
+    var cantidad = state.cantidad;
 
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     
