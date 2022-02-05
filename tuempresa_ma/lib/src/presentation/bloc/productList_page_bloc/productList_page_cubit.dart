@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuempresa_ma/src/domain/product.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/productList_page_bloc/productList_page_state.dart';
 
 import 'package:tuempresa_ma/src/data/authentication.dart';
@@ -8,13 +9,28 @@ import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
 import 'package:tuempresa_ma/src/data/initFirebase.dart';
 
 class ProductListPageCubit extends Cubit<ProductListPageState> {
-  ProductListPageCubit() : super(ProductListInputState());
+  ProductListPageCubit() : super(ProductListWaitingState());
 
-  void inputProductName(String newName) {
-    if (state is ProductListInputState) {
-      (state as ProductListInputState).nombre = newName;
-      emit(state);
+  Future<void> fetchProductInfo() async {
+    //TODO recibe nombre
+
+    await Future.delayed(
+        Duration(seconds: 2)); //simula recoger los productos de firebase
+    emit(ProductListDisplayState(products: [])); //emitir la lista de producto
+  }
+
+  void inputProductName(String name) {
+    if (state is ProductListDisplayState) {
+      emit(ProductListDisplayState(
+          productName: name,
+          products: (state as ProductListDisplayState).products));
     }
+  }
+
+  List<Product> _filterList(List<Product> list, String name) {
+
+    //a partir de la lista y el nombre retornar
+    return [];
   }
 
   // Future<void> register(BuildContext context, GlobalKey<FormState> key) async {

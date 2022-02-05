@@ -128,9 +128,7 @@ Future<dynamic> getAllProducts(String company) async {
       .collection("productos")
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
-
-
-
+      
   if (info.exists) {
     return info.data();
   } else {
@@ -140,6 +138,4 @@ Future<dynamic> getAllProducts(String company) async {
   //.orderBy('name', descending: true)
   //.startAt(test)
   //.endAt(test+'\uf8ff')
-
-
 }
