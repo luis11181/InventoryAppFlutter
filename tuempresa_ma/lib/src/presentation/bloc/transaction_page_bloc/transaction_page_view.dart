@@ -69,7 +69,11 @@ class TransactionPageView extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () =>
                         context.read<TransactionPageCubit>().pressButton(),
-                    child: const Text('buscar'),
+                    child: const Icon(Icons.search),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(2),
+                    ),
                   ),
                 ],
               ),
