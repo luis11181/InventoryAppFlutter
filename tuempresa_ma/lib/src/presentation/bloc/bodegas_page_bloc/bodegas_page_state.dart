@@ -1,15 +1,15 @@
+import 'package:tuempresa_ma/src/domain/Bodega.dart';
+
 abstract class BodegasPageState {}
 
 class BodegasWaitingState implements BodegasPageState {}
 
 class BodegasInputState implements BodegasPageState {
-  BodegasInputState({
-    this.id = 0,
-    this.nombre = '',
-    this.ubicacion = '',
-  });
+  bool nuevo;
+  List<Bodega> bodegas;
 
-  int id;
-  String nombre;
-  String ubicacion;
+  BodegasInputState({
+    required this.bodegas,
+    this.nuevo = false
+  });
 }
