@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bodegas_page_bloc.dart';
+import 'bodegas_page_cubit.dart';
 import 'bodegas_page_view.dart';
 
 class BodegasPage extends StatelessWidget {
