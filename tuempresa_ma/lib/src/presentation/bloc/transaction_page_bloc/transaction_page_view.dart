@@ -20,63 +20,79 @@ class TransactionPageView extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-
     final args = ModalRoute.of(context)!.settings.arguments as Map;
 
     //String code = args["code"].toString();
-
-    
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Transacciones')),
       body: BlocBuilder<TransactionPageCubit, TransactionPageState>(
         builder: (context, state) {
+          if (state is WaitingState) {
+            context.read<TransactionPageCubit>().search(context);
+          }
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               //Text('el codigo es: $code'),
-            
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    labelText: 'Producto a buscar:',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
+
+              Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: 'Producto a buscar:',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
+                        onChanged: (producto) => context
+                            .read<TransactionPageCubit>()
+                            .inputproducto(producto),
+                      ),
                     ),
                   ),
-                  initialValue: state
-                      .producto, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
-                  onChanged: (producto) =>
-                      context.read<TransactionPageCubit>().inputproducto(producto),
-                ),
-              ),
-              Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
                   ElevatedButton(
                     onPressed: () =>
-                        context.read<TransactionPageCubit>().search(context),
+                        context.read<TransactionPageCubit>().pressButton(),
                     child: const Text('buscar'),
                   ),
                 ],
               ),
 
-              Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: context.read<TransactionPageCubit>().resultados(context),
-               
-                )
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: state is WaitingState
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListView(
+                          children: (state as DisplayTransactionListState)
+                              .transacciones
+                              .map((e) => Card(
+                                      child: ExpansionTile(
+                                    title: Text(' ${e.producto}  ${e.fecha}'),
+                                    children: [
+                                      Text('Cantidad: ${e.cantidad}'),
+                                      Text('Cliente: ${e.cliente}'),
+                                      Text('Responsable: ${e.empleado}'),
+                                    ],
+                                  )))
+                              .toList()) // state.transactions
+
+                  ),
             ],
           );
         },

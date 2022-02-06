@@ -1,15 +1,27 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:tuempresa_ma/src/domain/transaction.dart';
+
+
+
 
 // ignore: must_be_immutable
-class TransactionPageState extends Equatable {
-  TransactionPageState({
-    this.producto = '',
-    this.transacciones ,
+abstract class  TransactionPageState {}
+
+class DisplayTransactionListState extends TransactionPageState {
+  DisplayTransactionListState({
+    required this.producto ,
+    required this.transacciones,
   });
 
   String producto;
-   List<dynamic>? transacciones;
+   List<Transaccion> transacciones;
 
-  @override
-  List<Object?> get props => [producto];
+
+}
+
+class WaitingState extends TransactionPageState {
+  WaitingState({ this.producto = ""});
+
+  String producto;
 }

@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
 
     var states = {'company': company, 'name': name, 'email': email};
 
-
     return Scaffold(
       appBar: AppBar(title: const Text('Homepage')),
       body: Center(
@@ -83,7 +82,8 @@ class HomePage extends StatelessWidget {
                       subtitle: Text('Descripción'),
                       isThreeLine: true,
                       onTap: () {
-                        //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'transaction',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -95,9 +95,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-
-          Navigator.pushNamed(context, 'scanpage', 
-            arguments: states);
+          Navigator.pushNamed(context, 'scanpage', arguments: states);
           // Add your onPressed code here!
         },
         label: const Text(

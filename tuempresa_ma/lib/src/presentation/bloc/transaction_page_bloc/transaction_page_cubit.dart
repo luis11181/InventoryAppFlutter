@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuempresa_ma/src/domain/transaction.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/transaction_page_bloc/transaction_page_state.dart';
 
 import 'package:tuempresa_ma/src/data/authentication.dart';
@@ -7,15 +9,25 @@ import 'package:tuempresa_ma/src/data/createFirestore.dart';
 import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
 
 class TransactionPageCubit extends Cubit<TransactionPageState> {
-  TransactionPageCubit() : super(TransactionPageState());
+  TransactionPageCubit() : super(WaitingState());
+
+  void pressButton() {
+    if (state is DisplayTransactionListState) {
+      emit(WaitingState(
+          producto: (state as DisplayTransactionListState).producto));
+    }
+  }
 
   void inputproducto(String producto) {
-    state.producto = producto;
-    emit(state);
+    if (state is DisplayTransactionListState) {
+      emit(DisplayTransactionListState(
+          producto: producto,
+          transacciones: (state as DisplayTransactionListState).transacciones));
+    }
   }
 
-  Future<void> search(BuildContext context) async {
-    var producto = state.producto;
+  void search(BuildContext context) async {
+    var producto = (state as WaitingState).producto;
 
     final args = ModalRoute.of(context)!.settings.arguments as Map;
 
@@ -26,82 +38,77 @@ class TransactionPageCubit extends Cubit<TransactionPageState> {
 
     //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
 
-    List<dynamic>? transacciones = null;
+    List<Map<String, dynamic>> mapa;
 
     if (producto == 'vacio' || producto == '') {
-      transacciones = await getAllTransactions(company);
+
+      mapa = await getAllTransactions(company);
     } else {
-      transacciones = await getTransactions(company, producto);
+      mapa = await getTransactions(company, producto);
     }
 
-    state.transacciones = transacciones;
-    emit(state);
+    List<Transaccion> transacciones =
+        mapa.map((e) => Transaccion.fromJson(e)).toList();
 
-    //var states = {'company': enterpriseName, 'name': name, 'email': email};
-    //Navigator.popUntil(context, ModalRoute.withName('homepage'));
-  }
-
-   resultados(BuildContext context) {
-    var producto = state.producto;
-
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
-
-    String company = args["company"].toString();
-    String email = args["email"].toString();
+    emit(DisplayTransactionListState(
+        producto: producto, transacciones: transacciones));
 
     //String code =  args["code"].toString();
 
-    //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
+    // //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
 
-    List<dynamic>? transacciones = state.transacciones;
+    // List<Widget>? resultado = [];
 
-    transacciones = state.transacciones;
+    // if (transacciones != 'vacio' &&
+    //     transacciones != '' &&
+    //     transacciones != null) {
+    //   transacciones.forEach((v) {
+    //     resultado.add(
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //         children: [
+    //           Text(
+    //             v['producto'],
+    //             style: TextStyle(fontSize: 20),
+    //           ),
+    //           Text(
+    //             v['cantidad'].toString(),
+    //             style: TextStyle(fontSize: 20),
+    //           ),
+    //           Text(
+    //             v['fecha'],
+    //             style: TextStyle(fontSize: 20),
+    //           ),
+    //           Text(
+    //             v['cliente'],
+    //             style: TextStyle(fontSize: 20),
+    //           ),
+    //           Text(
+    //             v['empleado'],
+    //             style: TextStyle(fontSize: 20),
+    //           ),
+    //         ],
+    //       ),
+    //     ); //
+    //   });
 
-    List<Widget> resultado = [];
+    //   state.transacciones = resultado;
+    //   emit(state);
 
-    if (transacciones != 'vacio' &&
-        transacciones != '' &&
-        transacciones != null) {
-      transacciones.forEach((v) {
-        resultado.add(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                v['producto'],
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                v['cantidad'].toString(),
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                v['fecha'],
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                v['cliente'],
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                v['empleado'],
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
-          ),
-        ); //
-      });
-      return resultados;
-    } else {
+    //   return resultado;
+    // } else {
 
-      resultado.add( Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text('no hay resultados', style: TextStyle(fontSize: 20),),
-          ],
-        ),); //
+    //   resultado.add( Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //       children: [
+    //         Text('no hay resultados', style: TextStyle(fontSize: 20),),
+    //       ],
+    //     ),); //
 
-      return resultado;
-    }
+    //    state.transacciones = resultado;
+    //    emit(state);
+
+    //   return resultado;
+    // }
 
     //var states = {'company': enterpriseName, 'name': name, 'email': email};
     //Navigator.popUntil(context, ModalRoute.withName('homepage'));

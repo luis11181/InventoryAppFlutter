@@ -90,15 +90,14 @@ Future<dynamic> getBodegaInfo(
   if (info.exists) {
     Map<String, dynamic>? result = info.data();
 
-  return result;
+    return result;
   } else {
     return null;
   }
-
 }
 
 //* query to get the info of products
-Future<dynamic> getProducts(String company, int name) async {
+Future<List<Map<String, dynamic>>> getProducts(String company, int name) async {
   var info;
   info = await empresas
       .doc(company)
@@ -108,11 +107,12 @@ Future<dynamic> getProducts(String company, int name) async {
       .catchError((error) => print("Failed to bring products: $error"));
 
   if (info != null) {
-    var xx =info.docs.map((doc) => doc.data()).toList();
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
     //var xxx =info.docs.data();
     return xx;
   } else {
-    return null;
+    return [];
   }
   // .collection("productos")
   //.orderBy('name', descending: true)
@@ -121,7 +121,7 @@ Future<dynamic> getProducts(String company, int name) async {
 }
 
 //* query to get the info of products
-Future<dynamic> getAllProducts(String company) async {
+Future<List<Map<String, dynamic>>> getAllProducts(String company) async {
   var info;
   info = await empresas
       .doc(company)
@@ -129,77 +129,79 @@ Future<dynamic> getAllProducts(String company) async {
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
-
-
   if (info != null) {
-    var xx =info.docs.map((doc) => doc.data()).toList();
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
     //var xxx =info.docs.data();
     return xx;
   } else {
-    return null;
+    return [];
   }
   // .collection("productos")
   //.orderBy('name', descending: true)
   //.startAt(test)
   //.endAt(test+'\uf8ff')
-
-
 }
 
-
 //* query to get the info of products
-Future<dynamic> getAllTransactions(String company) async {
-  var info;
-  info = await empresas
+Future<List<Map<String, dynamic>>> getAllTransactions(String company) async {
+  final info = await empresas
       .doc(company)
       .collection("transacciones")
-      .limit(10)
+      .limit(15)
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
   if (info != null) {
-    var xx =info.docs.map((doc) => doc.data()).toList();
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
     //var xxx =info.docs.data();
     return xx;
   } else {
-    return null;
+    return [];
   }
-  // .collection("productos")
-  //.orderBy('name', descending: true)
-  //.startAt(test)
-  //.endAt(test+'\uf8ff')
-
-
 }
 
-
 //* query to get the info of products
-Future<dynamic> getTransactions(String company, String producto) async {
-  var info;
-  info = await empresas
+Future<List<Map<String, dynamic>>> getTransactions(
+    String company, String producto) async {
+  final info = await empresas
       .doc(company)
       .collection("transacciones")
       .where("producto", isEqualTo: producto)
-      .limit(10)
+      .limit(15)
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
   if (info != null) {
-    var xx =info.docs.map((doc) => doc.data()).toList();
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
     //var xxx =info.docs.data();
     return xx;
   } else {
-    return null;
+    return [];
   }
   // .collection("productos")
   //.orderBy('name', descending: true)
   //.startAt(test)
   //.endAt(test+'\uf8ff')
-
-
 }
 
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getAllEmpleados(String company) async {
+  final info = await empresas
+      .doc(company)
+      .collection("empleados")
+      .limit(15)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
 
-
-
-
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+}
