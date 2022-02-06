@@ -97,11 +97,6 @@ class TransactionPageView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.brightness_6),
-        mini: true,
-        onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-      ),
     );
   }
 }

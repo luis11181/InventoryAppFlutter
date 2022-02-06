@@ -8,10 +8,19 @@ class Product {
     required this.unidad,
   });
 
-  num cantidad;
-  num precio;
-  String descripcion;
-  String nombre;
-  String productBarcode;
-  String unidad;
+  final num cantidad;
+  final num precio;
+  final String descripcion;
+  final String nombre;
+  final String productBarcode;
+  final String unidad;
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        cantidad: json["cantidad"],
+        precio: json["precio"],
+        descripcion: json["descripcion"],
+        nombre: json["nombre"],
+        productBarcode: json["productBarcode"],
+        unidad: json["unidad"]
+      );
 }

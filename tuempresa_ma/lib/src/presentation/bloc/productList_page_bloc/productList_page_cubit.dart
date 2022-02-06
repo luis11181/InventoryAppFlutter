@@ -9,29 +9,73 @@ import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
 import 'package:tuempresa_ma/src/data/initFirebase.dart';
 
 class ProductListPageCubit extends Cubit<ProductListPageState> {
-  ProductListPageCubit() : super(ProductListWaitingState());
+  ProductListPageCubit() : super(ProductPageWaitingState());
 
-  Future<void> fetchProductInfo() async {
-    //TODO recibe nombre
-
-    await Future.delayed(
-        Duration(seconds: 2)); //simula recoger los productos de firebase
-    emit(ProductListDisplayState(products: [])); //emitir la lista de producto
+  void pressButton() {
+    if (state is ProductListDisplayState) {
+      emit(ProductPageWaitingState(
+          productName: (state as ProductListDisplayState).productName));
+    }
   }
 
-  void inputProductName(String name) {
+  void inputproducto(String productName) {
     if (state is ProductListDisplayState) {
       emit(ProductListDisplayState(
-          productName: name,
+          productName: productName,
           products: (state as ProductListDisplayState).products));
     }
   }
 
-  List<Product> _filterList(List<Product> list, String name) {
+  void search(BuildContext context) async {
+    var productName = (state as ProductPageWaitingState).productName;
 
-    //a partir de la lista y el nombre retornar
-    return [];
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    String company = args["company"].toString();
+
+    //String code =  args["code"].toString();
+
+    //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
+
+    List<Map<String, dynamic>> mapa;
+
+    if (productName == 'vacio' || productName == '') {
+
+      mapa = await getAllProducts(company);
+      
+    } else {
+      mapa = await getProducts(company, productName);
+    }
+
+    List<Product> products =
+        mapa.map((e) => Product.fromJson(e)).toList();
+
+    emit(ProductListDisplayState(
+        productName: productName, products: products));    
   }
+
+
+  // Future<void> fetchProductInfo() async {
+  //   //TODO recibe nombre
+
+  //   await Future.delayed(
+  //       Duration(seconds: 2)); //simula recoger los productos de firebase
+  //   emit(ProductListDisplayState(producto: [])); //emitir la lista de producto
+  // }
+
+  // void inputProductName(String name) {
+  //   if (state is ProductListDisplayState) {
+  //     emit(ProductListDisplayState(
+  //         productName: name,
+  //         producto: (state as ProductListDisplayState).producto));
+  //   }
+  // }
+
+  // List<Product> _filterList(List<Product> list, String name) {
+
+  //   //a partir de la lista y el nombre retornar
+  //   return [];
+  // }
 
   // Future<void> register(BuildContext context, GlobalKey<FormState> key) async {
   //   if (state is ProductListInputState) {

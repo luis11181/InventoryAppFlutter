@@ -97,9 +97,9 @@ Future<dynamic> getBodegaInfo(
 }
 
 //* query to get the info of products
-Future<List<Map<String, dynamic>>> getProducts(String company, int name) async {
-  var info;
-  info = await empresas
+Future<List<Map<String, dynamic>>> getProducts(String company, String name) async {
+  
+  final info = await empresas
       .doc(company)
       .collection("productos")
       .where("nombre", isEqualTo: name)
@@ -122,8 +122,7 @@ Future<List<Map<String, dynamic>>> getProducts(String company, int name) async {
 
 //* query to get the info of products
 Future<List<Map<String, dynamic>>> getAllProducts(String company) async {
-  var info;
-  info = await empresas
+ final info = await empresas
       .doc(company)
       .collection("productos")
       .get()
@@ -163,8 +162,7 @@ Future<List<Map<String, dynamic>>> getAllTransactions(String company) async {
 }
 
 //* query to get the info of products
-Future<List<Map<String, dynamic>>> getTransactions(
-    String company, String producto) async {
+Future<List<Map<String, dynamic>>> getTransactions(String company, String producto) async {
   final info = await empresas
       .doc(company)
       .collection("transacciones")

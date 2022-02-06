@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tuempresa_ma/src/domain/transaction.dart';
-
-
-
-
 // ignore: must_be_immutable
 abstract class  TransactionPageState {}
 

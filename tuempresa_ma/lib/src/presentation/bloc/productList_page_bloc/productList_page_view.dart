@@ -18,64 +18,89 @@ class ProductListPageView extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+
+    //String code = args["code"].toString();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Inventario')),
+      appBar: AppBar(title: const Text('Productos')),
       body: BlocBuilder<ProductListPageCubit, ProductListPageState>(
         builder: (context, state) {
-          if (state is ProductListWaitingState) {
-            context.read<ProductListPageCubit>().fetchProductInfo();
+          if (state is ProductPageWaitingState) {
+            context.read<ProductListPageCubit>().search(context);
           }
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Text(
-                  'Resumen de productos',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  'Busca un producto por su nombre',
-                  style: Theme.of(context).textTheme.headline6,
-                  // textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    labelText: 'Nombre de producto',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
+              //Text('el codigo es: $code'),
+              Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: 'Producto a buscar:',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onChanged: (producto) => context
+                            .read<ProductListPageCubit>()
+                            .inputproducto(producto),
+                      ),
                     ),
                   ),
-                  onChanged: (text) => context
-                      .read<ProductListPageCubit>()
-                      .inputProductName(text),
-                ),
+                  ElevatedButton(
+                    onPressed: () =>
+                        context.read<ProductListPageCubit>().pressButton(),
+                    child: const Icon(Icons.search),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(2),
+                    ),
+                  ),
+                ],
               ),
+
               SizedBox(
-                  height: 400,
-                  child: state is ProductListWaitingState
-                      ? Center(child: CircularProgressIndicator())
-                      : Text((state as ProductListDisplayState).productName)),
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: state is ProductPageWaitingState
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListView(
+                          children: (state as ProductListDisplayState)
+                              .products
+                              .map((e) => Card(
+                                      child: ExpansionTile(
+                                    title: Text(' ${e.nombre} '),
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text('Cantidad: '),
+                                          Text('${e.cantidad}'),
+                                        ],
+                                      ),
+                                      Text('Descripción: ${e.descripcion}'),
+                                      Text('Precio: ${e.precio}'),
+                                      Text(
+                                          'Codigo de barras: ${e.productBarcode}'),
+                                      Text('Unidad: ${e.unidad}'),
+                                    ],
+                                  )))
+                              .toList()) // state.transactions
+
+                  ),
             ],
           );
         },
