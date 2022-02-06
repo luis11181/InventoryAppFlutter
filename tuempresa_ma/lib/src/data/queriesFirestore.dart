@@ -90,36 +90,116 @@ Future<dynamic> getBodegaInfo(
   if (info.exists) {
     Map<String, dynamic>? result = info.data();
 
-  return result;
+    return result;
   } else {
     return null;
   }
-
 }
 
 //* query to get the info of products
-Future<dynamic> getProducts(String company, int name, String email) async {
-  var info;
-  info = await empresas
+Future<List<Map<String, dynamic>>> getProducts(String company, String name) async {
+  
+  final info = await empresas
       .doc(company)
       .collection("productos")
       .where("nombre", isEqualTo: name)
       .get()
       .catchError((error) => print("Failed to bring products: $error"));
 
-
-
-  if (info.exists) {
-    Map<String, dynamic>? result = info.data();
-
-    return info.data();
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
   } else {
-    return null;
+    return [];
   }
   // .collection("productos")
   //.orderBy('name', descending: true)
   //.startAt(test)
   //.endAt(test+'\uf8ff')
+}
 
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getAllProducts(String company) async {
+ final info = await empresas
+      .doc(company)
+      .collection("productos")
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
 
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+}
+
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getAllTransactions(String company) async {
+  final info = await empresas
+      .doc(company)
+      .collection("transacciones")
+      .limit(15)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+}
+
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getTransactions(String company, String producto) async {
+  final info = await empresas
+      .doc(company)
+      .collection("transacciones")
+      .where("producto", isEqualTo: producto)
+      .limit(15)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+}
+
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getAllEmpleados(String company) async {
+  final info = await empresas
+      .doc(company)
+      .collection("empleados")
+      .limit(15)
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
 }

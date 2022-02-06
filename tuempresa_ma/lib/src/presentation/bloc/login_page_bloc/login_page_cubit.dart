@@ -42,7 +42,7 @@ class LoginPageCubit extends Cubit<LoginPageState> {
         //  arguments: states);
           Navigator.pushNamed(
         context,
-        'homepage',
+        'homepage', //'homepage',
         arguments: states,
       );
 

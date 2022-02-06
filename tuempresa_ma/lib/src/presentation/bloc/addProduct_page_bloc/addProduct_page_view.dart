@@ -20,7 +20,6 @@ class AddProductPageView extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-
     final args = ModalRoute.of(context)!.settings.arguments as Map;
 
     String code = args["code"].toString();
@@ -33,42 +32,47 @@ class AddProductPageView extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: TextFormField(
-                            onChanged: (text){
-                              state.nombre = text;
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Nombre del producto',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3,
-                                    color: Theme.of(context).colorScheme.primary),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3,
-                                    color: Theme.of(context).colorScheme.secondary),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20,),
-                        FloatingActionButton(onPressed: (){},
-                            child: Icon(Icons.add),
-                        )
-                      ],
-                    ),
-                SizedBox(height: 30,),
                 Row(
                   children: [
                     Flexible(
                       child: TextFormField(
-                        onChanged: (text){
+                        onChanged: (text) {
+                          state.nombre = text;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Nombre del producto',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   width: 20,
+                    // ),
+                    // FloatingActionButton(
+                    //   onPressed: () {},
+                    //   child: Icon(Icons.add),
+                    // )
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextFormField(
+                        onChanged: (text) {
                           state.cod_barras = text;
                         },
                         decoration: InputDecoration(
@@ -88,19 +92,23 @@ class AddProductPageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20,),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     ElevatedButton(
-                        onPressed: (){
-                          Navigator.pushNamed(context,'scanpage', arguments: state);
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'scanpage',
+                              arguments: state);
                         },
-                        child: Text("Escanear")
-                    )
+                        child: Text("Escanear"))
                   ],
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 Flexible(
                   child: TextFormField(
-                    onChanged: (text){
+                    onChanged: (text) {
                       state.caracteristicas = text;
                     },
                     decoration: InputDecoration(
@@ -126,8 +134,8 @@ class AddProductPageView extends StatelessWidget {
                     Flexible(
                       child: TextFormField(
                         keyboardType: TextInputType.number,
-                        onChanged: (text){
-                          state.precio = double.parse(text);
+                        onChanged: (text) {
+                          state.precio = int.parse(text);
                         },
                         decoration: InputDecoration(
                           labelText: 'Precio',
@@ -146,10 +154,12 @@ class AddProductPageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20,),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Flexible(
                       child: TextFormField(
-                        onChanged: (text){
+                        onChanged: (text) {
                           state.unidad = text;
                         },
                         decoration: InputDecoration(
@@ -169,7 +179,9 @@ class AddProductPageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 80,)
+                    const SizedBox(
+                      width: 80,
+                    )
                   ],
                 ),
               ],
@@ -178,9 +190,10 @@ class AddProductPageView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){
+        onPressed: () {
           context.read<AddProductPageCubit>().addProd(context);
         },
+        heroTag: null,
         label: const Text("Agregar"),
         icon: const Icon(Icons.add),
       ),

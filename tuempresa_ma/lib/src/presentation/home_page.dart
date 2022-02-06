@@ -13,9 +13,9 @@ class HomePage extends StatelessWidget {
 
     var states = {'company': company, 'name': name, 'email': email};
 
-
     return Scaffold(
-      appBar: AppBar(title: const Text('Homepage'),automaticallyImplyLeading: false),
+      appBar: AppBar(
+          title: const Text('Homepage'), automaticallyImplyLeading: false),
       body: Center(
         child: Column(
           children: [
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.6,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                         'Bodegas',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Inventario en bodegas'),
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                         'Empleados',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Empleados de la empresa'),
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
@@ -63,13 +63,15 @@ class HomePage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.inventory),
                       title: Text(
-                        'Inventarios',
+                        'Productos',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Lista de productos existentes'),
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'productListpage',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -77,13 +79,14 @@ class HomePage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.calendar_today_rounded),
                       title: Text(
-                        'Resumen',
+                        'Transacciones',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Resumen de transacciones realizadas'),
                       isThreeLine: true,
                       onTap: () {
-                        //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'transaction',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -93,19 +96,64 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-
-          Navigator.pushNamed(context, 'addProduct',
-            arguments: states);
-          // Add your onPressed code here!
-        },
-        label: const Text(
-          'Agregar producto',
-        ),
-        icon: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [          
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, 'scanpage', arguments: states);
+              // Add your onPressed code here!
+            },
+            icon: Icon(Icons.add),
+            label: const Text(
+              'Transacción',
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, 'addProduct', arguments: states);
+              // Add your onPressed code here!
+            },
+            icon: Icon(Icons.add),
+            label: const Text(
+              'Producto',
+            ),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
+
+
+
+
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: Row(
+      //   children: [
+      //     Positioned(
+      //         left: 30,
+      //         bottom: 20,
+      //         child: FloatingActionButton.extended(
+      //           onPressed: () {
+      //             Navigator.pushNamed(context, 'scanpage', arguments: states);
+      //             // Add your onPressed code here!
+      //           },
+      //           label: const Text(
+      //             'transaccion',
+      //           ),
+      //           icon: const Icon(Icons.add),
+      //         )),
+      //     Positioned(
+      //         bottom: 20,
+      //         right: 30,
+      //         child: FloatingActionButton.extended(
+      //           onPressed: () {
+      //             Navigator.pushNamed(context, 'scanpage', arguments: states);
+      //             // Add your onPressed code here!
+      //           },
+      //           label: const Text(
+      //             'nuevo producto',
+      //           ),
+      //           icon: const Icon(Icons.add),
+      //         )),
