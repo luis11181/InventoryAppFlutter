@@ -25,13 +25,33 @@ class EmpleadosPageView extends StatelessWidget{
         body: BlocBuilder<EmpleadosPageCubit,EmpleadosPageState>(
             builder: (context, state){
               if (state is EmpleadosWaitingState) {
-                context.read()<EmpleadosPageCubit>().getEmpleados(context);
-                return const CircularProgressIndicator();
+                context.read<EmpleadosPageCubit>().retrieveEmpleados(context);
               }
-              return ListView(
-                children: (state as EmpleadosInputState)
-                  .empleados.map((e) => tarjeta(e)).toList()
-              ,);
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //Text('el codigo es: $code'),
+
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: state is EmpleadosWaitingState
+                          ? const Center(child: CircularProgressIndicator())
+                          : ListView(
+                          children: (state as EmpleadosInputState)
+                              .empleados
+                              .map((e) => Card(
+                              child: ExpansionTile(
+                                title: Text(' ${e.nombre}  ${e.apellido}'),
+                                children: [
+                                  Text('Cantidad: ${e.correo}'),
+                                  Text('Cliente: ${e.usuario}'),
+                                ],
+                              )))
+                              .toList()) // state.transactions
+
+                  ),
+                ],
+              );
             }
         )
 

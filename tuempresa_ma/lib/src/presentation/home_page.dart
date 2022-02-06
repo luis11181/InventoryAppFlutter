@@ -41,7 +41,8 @@ class HomePage extends StatelessWidget {
                       subtitle: Text('Inventario en bodegas'),
                       isThreeLine: true,
                       onTap: () {
-                        //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'storages',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -56,6 +57,8 @@ class HomePage extends StatelessWidget {
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'employers',
+                            arguments: states);
                       },
                     ),
                   ),

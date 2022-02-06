@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/bodegas_page_bloc/bodegas_page.dart';
+import 'package:tuempresa_ma/src/presentation/bloc/empleados_page/empleados_page.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/login_page_bloc/login_page.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/register_page_bloc/register_page.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/scan_page_bloc/scan_page.dart';
@@ -45,6 +47,8 @@ class AppView extends StatelessWidget {
             'addProduct': (context) => const AddProductPage(),
             'productListpage': (context) => const ProductListPage(),
             'transaction': (context) => const TransactionPage(),
+            'employers' : (context) => const EmpleadosPage(),
+            'storages': (context) => const BodegasPage()
           },
         );
       },

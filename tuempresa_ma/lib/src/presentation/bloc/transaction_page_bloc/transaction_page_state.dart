@@ -11,9 +11,7 @@ class DisplayTransactionListState extends TransactionPageState {
   });
 
   String producto;
-   List<Transaccion> transacciones;
-
-
+  List<Transaccion> transacciones;
 }
 
 class WaitingState extends TransactionPageState {
