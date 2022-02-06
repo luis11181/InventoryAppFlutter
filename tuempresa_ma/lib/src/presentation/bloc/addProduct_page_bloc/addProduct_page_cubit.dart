@@ -6,30 +6,14 @@ import 'package:tuempresa_ma/src/data/authentication.dart';
 import 'package:tuempresa_ma/src/data/createFirestore.dart';
 
 class AddProductPageCubit extends Cubit<AddProductPageState> {
-  AddProductPageCubit() : super(AddProductPageState(nombre: "nombre"));
+  AddProductPageCubit() : super(AddProductPageState());
 
-  void inputcantidad(int cantidad) {
-    state.cantidad = cantidad;
-    emit(state);
-  }
-
-  Future<void> changeCantidad(BuildContext context, String operacion) async {
-    var cantidad = state.cantidad;
+  Future<void> addProd(BuildContext context) async {
 
     final args = ModalRoute.of(context)!.settings.arguments as Map;
-
     String company = args["company"].toString();
-    String email = args["email"].toString();
 
-    String code = args["code"].toString();
-
-    if (operacion == 'restar') {
-      cantidad = cantidad * -1;
-    }
-
-    var bodega = 'bodega1';
-
-    var cliente = 'jose';
+    crearProduct(company, state.cod_barras, state.nombre, state.caracteristicas, state.precio, "");
 
     //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
 

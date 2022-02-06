@@ -26,7 +26,7 @@ class AddProductPageView extends StatelessWidget {
     String code = args["code"].toString();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Agrega un producto")),
+      appBar: AppBar(title: const Text("Crea un nuevo producto")),
       body: BlocBuilder<AddProductPageCubit, AddProductPageState>(
         builder: (context, state) {
           return Padding(
@@ -37,6 +37,9 @@ class AddProductPageView extends StatelessWidget {
                       children: [
                         Flexible(
                           child: TextFormField(
+                            onChanged: (text){
+                              state.nombre = text;
+                            },
                             decoration: InputDecoration(
                               labelText: 'Nombre del producto',
                               enabledBorder: OutlineInputBorder(
@@ -65,6 +68,9 @@ class AddProductPageView extends StatelessWidget {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        onChanged: (text){
+                          state.cod_barras = text;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Código de barras o QR',
                           enabledBorder: OutlineInputBorder(
@@ -94,6 +100,9 @@ class AddProductPageView extends StatelessWidget {
                 const SizedBox(height: 30,),
                 Flexible(
                   child: TextFormField(
+                    onChanged: (text){
+                      state.caracteristicas = text;
+                    },
                     decoration: InputDecoration(
                       labelText: 'Características',
                       enabledBorder: OutlineInputBorder(
@@ -116,8 +125,12 @@ class AddProductPageView extends StatelessWidget {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (text){
+                          state.precio = double.parse(text);
+                        },
                         decoration: InputDecoration(
-                          labelText: 'Cantidad',
+                          labelText: 'Precio',
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 width: 3,
@@ -134,22 +147,13 @@ class AddProductPageView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 20,),
-                    Column(
-                      children: [
-                        OutlinedButton(onPressed: (){}, child: const Icon(Icons.add)),
-                        OutlinedButton(onPressed: (){}, child: const Icon(Icons.remove))
-                      ],
-                    ),
-                    const SizedBox(width: 160,)
-                  ],
-                ),
-                const SizedBox(width: 20,),
-                Row(
-                  children: [
                     Flexible(
                       child: TextFormField(
+                        onChanged: (text){
+                          state.unidad = text;
+                        },
                         decoration: InputDecoration(
-                          labelText: 'Precio de compra',
+                          labelText: 'Unidad',
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 width: 3,
@@ -163,37 +167,20 @@ class AddProductPageView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        keyboardType: TextInputType.number,
                       ),
                     ),
-                    const SizedBox(width: 40,),
-                    Flexible(
-                      child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Precio de venta',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3,
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3,
-                              color: Theme.of(context).colorScheme.secondary),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),keyboardType: TextInputType.number,
-                    ),)
+                    const SizedBox(width: 80,)
                   ],
-                )
+                ),
               ],
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){},
+        onPressed: (){
+          context.read<AddProductPageCubit>().addProd(context);
+        },
         label: const Text("Agregar"),
         icon: const Icon(Icons.add),
       ),
