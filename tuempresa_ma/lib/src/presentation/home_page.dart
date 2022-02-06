@@ -14,7 +14,8 @@ class HomePage extends StatelessWidget {
     var states = {'company': company, 'name': name, 'email': email};
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Homepage')),
+      appBar: AppBar(
+          title: const Text('Homepage'), automaticallyImplyLeading: false),
       body: Center(
         child: Column(
           children: [
@@ -26,7 +27,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

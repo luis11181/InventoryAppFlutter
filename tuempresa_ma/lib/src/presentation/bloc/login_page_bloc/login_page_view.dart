@@ -18,7 +18,7 @@ class LoginPageView extends StatelessWidget {
     ]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Login')),
+
       body: BlocBuilder<LoginPageCubit, LoginPageState>(
         builder: (context, state) {
           return state is LoginWaitingState

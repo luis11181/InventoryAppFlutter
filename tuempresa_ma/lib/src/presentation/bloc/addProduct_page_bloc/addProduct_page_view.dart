@@ -10,6 +10,7 @@ import 'package:tuempresa_ma/src/presentation/theme_cubit.dart';
 
 class AddProductPageView extends StatelessWidget {
   /// {@macro app_view}
+
   const AddProductPageView({Key? key}) : super(key: key);
 
   @override
@@ -24,66 +25,164 @@ class AddProductPageView extends StatelessWidget {
 
     String code = args["code"].toString();
 
-    
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Add Product')),
+      appBar: AppBar(title: const Text("Crea un nuevo producto")),
       body: BlocBuilder<AddProductPageCubit, AddProductPageState>(
         builder: (context, state) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-              Text('el codigo es: $code'),
-            
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Cantidad a agregar o disminuir',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(15),
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            onChanged: (text){
+                              state.nombre = text;
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Nombre del producto',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).colorScheme.primary),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3,
+                                    color: Theme.of(context).colorScheme.secondary),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 20,),
+                        FloatingActionButton(onPressed: (){},
+                            child: Icon(Icons.add),
+                        )
+                      ],
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.secondary),
-                      borderRadius: BorderRadius.circular(15),
+                SizedBox(height: 30,),
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextFormField(
+                        onChanged: (text){
+                          state.cod_barras = text;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Código de barras o QR',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  initialValue: state
-                      .cantidad, //* pedia el ususario pero se requiere es el correo, por lo tanto se cambio el texto para que reciba el correo y no el usuario.
-                  onChanged: (number) =>
-                      context.read<AddProductPageCubit>().inputcantidad(number),
+                    const SizedBox(width: 20,),
+                    ElevatedButton(
+                        onPressed: (){
+                          Navigator.pushNamed(context,'scanpage', arguments: state);
+                        },
+                        child: Text("Escanear")
+                    )
+                  ],
                 ),
-              ),
-              Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<AddProductPageCubit>().changeCantidad(context, 'restar'),
-                    child: const Text('Retirar'),
+                const SizedBox(height: 30,),
+                Flexible(
+                  child: TextFormField(
+                    onChanged: (text){
+                      state.caracteristicas = text;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Características',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3,
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3,
+                            color: Theme.of(context).colorScheme.secondary),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<AddProductPageCubit>().changeCantidad(context, 'sumar'),
-                    child: const Text('Añadir'),
-                  ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (text){
+                          state.precio = double.parse(text);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Precio',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20,),
+                    Flexible(
+                      child: TextFormField(
+                        onChanged: (text){
+                          state.unidad = text;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Unidad',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.primary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3,
+                                color: Theme.of(context).colorScheme.secondary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 80,)
+                  ],
+                ),
+              ],
+            ),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.brightness_6),
-        mini: true,
-        onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: (){
+          context.read<AddProductPageCubit>().addProd(context);
+        },
+        label: const Text("Agregar"),
+        icon: const Icon(Icons.add),
       ),
     );
   }
