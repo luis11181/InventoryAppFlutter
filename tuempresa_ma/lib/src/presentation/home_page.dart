@@ -99,11 +99,11 @@ class HomePage extends StatelessWidget {
           // Add your onPressed code here!
         },
         label: const Text(
-          'Agregar producto',
+          'transaccion',
         ),
         icon: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
