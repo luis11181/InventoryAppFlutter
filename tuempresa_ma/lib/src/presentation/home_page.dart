@@ -93,17 +93,51 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, 'scanpage', arguments: states);
-          // Add your onPressed code here!
-        },
-        label: const Text(
-          'transaccion',
-        ),
-        icon: const Icon(Icons.add),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     Navigator.pushNamed(context, 'scanpage', arguments: states);
+      //     // Add your onPressed code here!
+      //   },
+      //   label: const Text(
+      //     'transaccion',
+      //   ),
+      //   icon: const Icon(Icons.add),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: [
+          Positioned(
+              left: 30,
+              bottom: 20,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'scanpage', arguments: states);
+                  // Add your onPressed code here!
+                },
+                label: const Text(
+                  'transaccion',
+                ),
+                icon: const Icon(Icons.add),
+              )),
+          Positioned(
+              bottom: 20,
+              right: 30,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'scanpage', arguments: states);
+                  // Add your onPressed code here!
+                },
+                label: const Text(
+                  'nuevo producto',
+                ),
+                icon: const Icon(Icons.add),
+              )),
+          // Add more floating buttons if you want
+          // There is no limit
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
