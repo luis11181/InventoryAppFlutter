@@ -9,11 +9,14 @@ class AddProductPageCubit extends Cubit<AddProductPageState> {
   AddProductPageCubit() : super(AddProductPageState());
 
   Future<void> addProd(BuildContext context) async {
-
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     String company = args["company"].toString();
 
-    crearProduct(company, state.cod_barras, state.nombre, state.caracteristicas, state.precio, "");
+    print(
+        '${company} ${state.cod_barras}, ${state.nombre}, ${state.caracteristicas} ${state.precio}  ${state.unidad}');
+
+    crearProduct(company, state.cod_barras, state.nombre, state.caracteristicas,
+        state.precio, state.unidad);
 
     //await crearProduct(company, code, 'xxname', 'xxxxdescripcion', 'bodeg2', 55, 'cajas');
 

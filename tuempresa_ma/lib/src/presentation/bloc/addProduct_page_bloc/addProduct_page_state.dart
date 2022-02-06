@@ -13,7 +13,7 @@ class AddProductPageState extends Equatable {
   String nombre;
   String cod_barras;
   String caracteristicas;
-  double precio;
+  int precio;
   String unidad;
 
   @override
