@@ -11,7 +11,7 @@ class ScanPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan QR or Barcode of your product'),
+        title: const Text('Nueva transaccion '),
       ),
       body: BlocBuilder<ScanPageCubit, ScanPageState>(
         builder: (context, state) {
@@ -50,7 +50,9 @@ class ScanPageView extends StatelessWidget {
                             ),
                           ),
                         )
-                      : Center(child: Text("Camera inactive")),
+                      : Center(
+                          child: Text(
+                              "Nueva transaccion de adicion o venta de inventario. \n Escanea QR o Barcode.   \n \n Camera inactive")),
                 ],
               ),
             ],
