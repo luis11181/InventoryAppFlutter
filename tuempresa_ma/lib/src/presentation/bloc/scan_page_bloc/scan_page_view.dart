@@ -15,56 +15,80 @@ class ScanPageView extends StatelessWidget {
       ),
       body: BlocBuilder<ScanPageCubit, ScanPageState>(
         builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  state.isCamActive
-                      ? Center(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+          return Center(
+            child: state is ScanPageScanning
+                ? SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: QrCamera(
+                      onError: (context, error) => Text(
+                        error.toString(),
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      qrCodeCallback: (code) {
+                        if (code != null) {
+                          context.read<ScanPageCubit>().codeRead(code);
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(
+                              color: Colors.blue,
+                              width: 10.0,
+                              style: BorderStyle.solid),
+                        ),
+                      ),
+                    ),
+                  )
+                : state is ScanPageCodeScanned
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Codigo Escaneado: ',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.5,
-                            child: QrCamera(
-                              onError: (context, error) => Text(
-                                error.toString(),
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              qrCodeCallback: (code) {
-                                if (code != null) {
-                                  context
-                                      .read<ScanPageCubit>()
-                                      .codeRead(context, code);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                      color: Colors.orange,
-                                      width: 10.0,
-                                      style: BorderStyle.solid),
+                            child: Center(
+                              child: Text(
+                                (state).code,
+                                style: const TextStyle(
+                                  fontSize: 30,
                                 ),
                               ),
                             ),
                           ),
-                        )
-                      : Center(
-                          child: Text(
-                              "Nueva transaccion de adicion o venta de inventario. \n Escanea QR o Barcode.   \n \n Camera inactive")),
-                ],
-              ),
-            ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () =>
+                                    context.read<ScanPageCubit>().scanAgain(),
+                                child: Text('Cancelar'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () => context
+                                    .read<ScanPageCubit>()
+                                    .sendCode(context),
+                                child: Text('Continuar'),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    : ElevatedButton.icon(
+                        onPressed: () =>
+                            context.read<ScanPageCubit>().activateCamera(),
+                        icon: const Icon(Icons.camera_alt),
+                        label:
+                            const Text('Activar camara para escanear producto'),
+                      ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Text(
-          "cam",
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () => context.read<ScanPageCubit>().activateCamera(),
       ),
     );
   }

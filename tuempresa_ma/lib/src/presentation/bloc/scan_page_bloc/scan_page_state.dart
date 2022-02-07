@@ -1,16 +1,10 @@
-import 'package:equatable/equatable.dart';
+abstract class ScanPageState {}
 
-// ignore: must_be_immutable
-class ScanPageState extends Equatable {
-  ScanPageState({
-    this.code = 'No code',
-  })  : isCamActive = false,
-        read = false;
+class ScanPageCameraOffState extends ScanPageState {}
 
-  String code;
-  bool isCamActive;
-  bool read;
+class ScanPageScanning extends ScanPageState {}
 
-  @override
-  List<Object?> get props => [code, isCamActive];
+class ScanPageCodeScanned extends ScanPageState {
+  final String code;
+  ScanPageCodeScanned(this.code);
 }

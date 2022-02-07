@@ -11,7 +11,11 @@ class HomePage extends StatelessWidget {
     String company = args['company'].toString();
     String email = args['email'].toString();
 
-    var states = {'company': company, 'name': name, 'email': email};
+    var states = {
+      'company': company,
+      'name': name,
+      'email': email,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -96,67 +100,34 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'addProduct',
+                        arguments: states);
+                  },
+                  icon: Icon(Icons.add),
+                  label: const Text(
+                    'Producto',
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'addTransaction',
+                        arguments: states);
+                  },
+                  icon: Icon(Icons.add),
+                  label: const Text(
+                    'Transacción',
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [          
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pushNamed(context, 'scanpage', arguments: states);
-              // Add your onPressed code here!
-            },
-            icon: Icon(Icons.add),
-            label: const Text(
-              'Transacción',
-            ),
-          ),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pushNamed(context, 'addProduct', arguments: states);
-              // Add your onPressed code here!
-            },
-            icon: Icon(Icons.add),
-            label: const Text(
-              'Producto',
-            ),
-          ),
-        ],
       ),
     );
   }
 }
-
-
-
-
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: Row(
-      //   children: [
-      //     Positioned(
-      //         left: 30,
-      //         bottom: 20,
-      //         child: FloatingActionButton.extended(
-      //           onPressed: () {
-      //             Navigator.pushNamed(context, 'scanpage', arguments: states);
-      //             // Add your onPressed code here!
-      //           },
-      //           label: const Text(
-      //             'transaccion',
-      //           ),
-      //           icon: const Icon(Icons.add),
-      //         )),
-      //     Positioned(
-      //         bottom: 20,
-      //         right: 30,
-      //         child: FloatingActionButton.extended(
-      //           onPressed: () {
-      //             Navigator.pushNamed(context, 'scanpage', arguments: states);
-      //             // Add your onPressed code here!
-      //           },
-      //           label: const Text(
-      //             'nuevo producto',
-      //           ),
-      //           icon: const Icon(Icons.add),
-      //         )),
