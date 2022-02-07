@@ -11,11 +11,15 @@ class HomePage extends StatelessWidget {
     String company = args['company'].toString();
     String email = args['email'].toString();
 
-    var states = {'company': company, 'name': name, 'email': email};
-
+    var states = {
+      'company': company,
+      'name': name,
+      'email': email,
+    };
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Homepage')),
+      appBar: AppBar(
+          title: const Text('Homepage'), automaticallyImplyLeading: false),
       body: Center(
         child: Column(
           children: [
@@ -38,10 +42,11 @@ class HomePage extends StatelessWidget {
                         'Bodegas',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Inventario en bodegas'),
                       isThreeLine: true,
                       onTap: () {
-                        //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'storages',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -52,10 +57,12 @@ class HomePage extends StatelessWidget {
                         'Empleados',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Empleados de la empresa'),
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'employers',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -63,13 +70,15 @@ class HomePage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.inventory),
                       title: Text(
-                        'Inventarios',
+                        'Productos',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Lista de productos existentes'),
                       isThreeLine: true,
                       onTap: () {
                         //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'productListpage',
+                            arguments: states);
                       },
                     ),
                   ),
@@ -77,35 +86,48 @@ class HomePage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.calendar_today_rounded),
                       title: Text(
-                        'Resumen',
+                        'Transacciones',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      subtitle: Text('Descripción'),
+                      subtitle: Text('Resumen de transacciones realizadas'),
                       isThreeLine: true,
                       onTap: () {
-                        //logica de oprimir tarjeta
+                        Navigator.pushNamed(context, 'transaction',
+                            arguments: states);
                       },
                     ),
                   ),
                 ],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'addProduct',
+                        arguments: states);
+                  },
+                  icon: Icon(Icons.add),
+                  label: const Text(
+                    'Producto',
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'addTransaction',
+                        arguments: states);
+                  },
+                  icon: Icon(Icons.add),
+                  label: const Text(
+                    'Transacción',
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-
-          Navigator.pushNamed(context, 'scanpage', 
-            arguments: states);
-          // Add your onPressed code here!
-        },
-        label: const Text(
-          'Agregar producto',
-        ),
-        icon: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

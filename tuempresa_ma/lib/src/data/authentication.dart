@@ -12,13 +12,13 @@ Future<bool> signIn(String email, String password) async {
   }
 }
 
-Future<String> signUp(String email, String password, String name, String lastname, String enterprise, String username) async {
+Future<String> signUp(String email, String password, String name,
+    String lastname, String enterprise, String username) async {
   //TODO cambiar string por union class, de freeze
   try {
     UserCredential userCredential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: email, password: password);
-            return 'funciono';
+        .createUserWithEmailAndPassword(email: email, password: password);
+    return 'funciono';
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');

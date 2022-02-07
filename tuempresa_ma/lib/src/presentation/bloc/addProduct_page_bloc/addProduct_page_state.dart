@@ -1,14 +1,33 @@
-import 'package:equatable/equatable.dart';
+abstract class AddProductPageState {}
 
-// ignore: must_be_immutable
-class AddProductPageState extends Equatable {
-  AddProductPageState({
-    this.cantidad ='0',
-    
+class WaitingAddProductPageState extends AddProductPageState {
+  WaitingAddProductPageState({
+    this.nombre = '',
+    this.cod_barras = '',
+    this.caracteristicas = '',
+    this.precio = 0,
+    this.unidad = '',
   });
 
-  String cantidad;
+  String nombre;
+  String cod_barras;
+  String caracteristicas;
+  int precio;
+  String unidad;
+}
 
-  @override
-  List<Object?> get props => [cantidad];
+class InputProductInfoState extends AddProductPageState {
+  InputProductInfoState({
+    this.nombre = '',
+    this.cod_barras = '',
+    this.caracteristicas = '',
+    this.precio = 0,
+    this.unidad = '',
+  });
+
+  String nombre;
+  String cod_barras;
+  String caracteristicas;
+  int precio;
+  String unidad;
 }
