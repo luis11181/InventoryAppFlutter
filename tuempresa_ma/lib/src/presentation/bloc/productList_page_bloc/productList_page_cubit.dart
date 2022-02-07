@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/domain/product.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/productList_page_bloc/productList_page_state.dart';
 
-import 'package:tuempresa_ma/src/data/authentication.dart';
 import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
-import 'package:tuempresa_ma/src/data/initFirebase.dart';
 
 class ProductListPageCubit extends Cubit<ProductListPageState> {
   ProductListPageCubit() : super(ProductPageWaitingState());
@@ -40,20 +37,15 @@ class ProductListPageCubit extends Cubit<ProductListPageState> {
     List<Map<String, dynamic>> mapa;
 
     if (productName == 'vacio' || productName == '') {
-
       mapa = await getAllProducts(company);
-      
     } else {
       mapa = await getProducts(company, productName);
     }
 
-    List<Product> products =
-        mapa.map((e) => Product.fromJson(e)).toList();
+    List<Product> products = mapa.map((e) => Product.fromJson(e)).toList();
 
-    emit(ProductListDisplayState(
-        productName: productName, products: products));    
+    emit(ProductListDisplayState(productName: productName, products: products));
   }
-
 
   // Future<void> fetchProductInfo() async {
   //   //TODO recibe nombre
