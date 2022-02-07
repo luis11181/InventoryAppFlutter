@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/domain/transaction.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/transaction_page_bloc/transaction_page_state.dart';
 
-import 'package:tuempresa_ma/src/data/authentication.dart';
-import 'package:tuempresa_ma/src/data/createFirestore.dart';
 import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
 
 class TransactionPageCubit extends Cubit<TransactionPageState> {
@@ -41,7 +38,6 @@ class TransactionPageCubit extends Cubit<TransactionPageState> {
     List<Map<String, dynamic>> mapa;
 
     if (producto == 'vacio' || producto == '') {
-
       mapa = await getAllTransactions(company);
     } else {
       mapa = await getTransactions(company, producto);

@@ -15,6 +15,9 @@ class ScanPageView extends StatelessWidget {
       ),
       body: BlocBuilder<ScanPageCubit, ScanPageState>(
         builder: (context, state) {
+          if (state is ScanPageCodeScanned) {
+            context.read<ScanPageCubit>().sendCode(context);
+          }
           return Center(
             child: state is ScanPageScanning
                 ? SizedBox(
@@ -42,44 +45,7 @@ class ScanPageView extends StatelessWidget {
                     ),
                   )
                 : state is ScanPageCodeScanned
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Codigo Escaneado: ',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: Center(
-                              child: Text(
-                                (state).code,
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () =>
-                                    context.read<ScanPageCubit>().scanAgain(),
-                                child: Text('Cancelar'),
-                              ),
-                              ElevatedButton(
-                                onPressed: () => context
-                                    .read<ScanPageCubit>()
-                                    .sendCode(context),
-                                child: Text('Continuar'),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
+                    ? CircularProgressIndicator()
                     : ElevatedButton.icon(
                         onPressed: () =>
                             context.read<ScanPageCubit>().activateCamera(),
