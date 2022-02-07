@@ -1,15 +1,21 @@
-import 'package:tuempresa_ma/src/domain/Bodega.dart';
-
 abstract class BodegasPageState {}
 
 class BodegasWaitingState implements BodegasPageState {}
 
-class BodegasInputState implements BodegasPageState {
-  bool nuevo;
-  List<Bodega> bodegas;
+class BodegasShowState implements BodegasPageState {
+  List<String> bodegas;
 
-  BodegasInputState({
+  BodegasShowState({
     required this.bodegas,
-    this.nuevo = false
+  });
+}
+
+class BodegasCreateState implements BodegasPageState {
+  List<String> bodegas;
+  String nueva_bodega;
+
+  BodegasCreateState({
+    required this.bodegas,
+    required this.nueva_bodega
   });
 }

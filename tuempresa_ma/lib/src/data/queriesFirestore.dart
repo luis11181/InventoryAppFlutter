@@ -203,3 +203,20 @@ Future<List<Map<String, dynamic>>> getAllEmpleados(String company) async {
     return [];
   }
 }
+
+Future<List<Map<String, dynamic>>> getAllBodegas(String company) async {
+  final info = await empresas
+      .doc(company)
+      .collection("bodegas")
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+    info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+}

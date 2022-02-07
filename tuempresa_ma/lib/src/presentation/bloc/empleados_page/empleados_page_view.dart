@@ -39,15 +39,9 @@ class EmpleadosPageView extends StatelessWidget{
                           : ListView(
                           children: (state as EmpleadosInputState)
                               .empleados
-                              .map((e) => Card(
-                              child: ExpansionTile(
-                                title: Text(' ${e.nombre}  ${e.apellido}'),
-                                children: [
-                                  Text('Cantidad: ${e.correo}'),
-                                  Text('Cliente: ${e.usuario}'),
-                                ],
-                              )))
-                              .toList()) // state.transactions
+                              .map((e) => tarjeta(e)).toList()
+                      )
+                    // state.transactions
 
                   ),
                 ],
@@ -70,7 +64,7 @@ class EmpleadosPageView extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('correo: ${e.correo}'),
-                    Text('usuario: ${e.usuario}'),
+                    Text('user: ${e.usuario}'),
                   ],
                 ),
               )

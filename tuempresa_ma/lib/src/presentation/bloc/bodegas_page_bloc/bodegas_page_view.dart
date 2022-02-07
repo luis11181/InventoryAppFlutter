@@ -22,66 +22,76 @@ class BodegasPageView extends StatelessWidget {
       appBar: AppBar(title: const Text("Lista de bodegas"),),
       body: BlocBuilder<BodegasPageCubit, BodegasPageState>(
         builder: (context, state) {
-          return state is BodegasWaitingState
-              ? const Center(
-            child: CircularProgressIndicator(),
-          )
-              : ListView(
-            children:[
 
-              !(state as BodegasInputState).nuevo ? ElevatedButton(
-                  onPressed: (){
-                    (state as BodegasPageCubit).createwindow(true);
-                    },
-                  child: const Icon(Icons.add)) :
-                  Column(
-                    children: [
-                      Flexible(
-                        child: Row(
-                          children:
-                          [
-                            TextField(
-                              decoration: const InputDecoration(
-                                labelText: "Nombre de la bodega"
-                              ),
-                              onChanged: (text){},
-                            ),
-                            const SizedBox(width: 100),
-                            TextField(
-                              decoration: const InputDecoration(
-                                labelText: "Dirección"
-                              ),
-                              onChanged: (text){},
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 20,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(onPressed: () {
+          if (state is BodegasWaitingState){
+            context.read<BodegasPageCubit>().getBodegas(context);
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                          },
-                              child: const Icon(Icons.done)
-                          ),
-                          ElevatedButton(onPressed: (){
+          if(state is BodegasShowState){
 
-                          },
-                              child: const Icon(Icons.clear)
-                          )
-                        ],
-                      ),
-                    ],
+            if(state.bodegas == []){
+              return Center(
+                child: Column(
+                children: [
+                  const Text("Crea una nueva bodega"),
+                  FloatingActionButton(
+                    onPressed:(){
+                      context.read<BodegasPageCubit>().changeToCreate();
+                    }, child: const Icon(Icons.add),
                   )
-            ],
+                ],
+                ),
+              );
+            }else{
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ListView(
+                    children: state.bodegas.map((e) => Text(e)).toList(),
+                  ),
+                  ElevatedButton(
+                      onPressed:(){
+                        context.read<BodegasPageCubit>().changeToCreate();
+                      }, child: const Icon(Icons.add))
+                ],
+              );
+            }
+          }
+
+          return Column(
+            children:  [
+              ...(state as BodegasCreateState).bodegas.map((e) => Text(e)).toList(),
+              ...[
+              ListTile(
+                title: TextField(
+                  onChanged: (text){
+                    context.read<BodegasPageCubit>().inputBodega(text);
+                  },
+                  decoration: const InputDecoration(
+                      labelText: "Nombre de la bodega"
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: (){
+                        context.read<BodegasPageCubit>().changeToShow();
+                      },
+                      child: const Icon(Icons.clear)),
+                  ElevatedButton(
+                      onPressed: (){
+                        //Agregar el nuevo String bodega a la base de datos
+                        context.read<BodegasPageCubit>().changeToShow();
+                      },
+                      child: const Icon(Icons.done))
+                ],
+              )
+              ],
+            ]
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.brightness_6),
-        mini: true,
-        onPressed: () => context.read<ThemeCubit>().toggleTheme(),
       ),
     );
   }
