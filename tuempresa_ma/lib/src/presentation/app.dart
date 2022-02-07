@@ -47,7 +47,7 @@ class AppView extends StatelessWidget {
             'addProduct': (context) => const AddProductPage(),
             'productListpage': (context) => const ProductListPage(),
             'transaction': (context) => const TransactionPage(),
-            'employers' : (context) => const EmpleadosPage(),
+            'employers' : (context) => const EmpleadosListPage(),
             'storages': (context) => const BodegasPage()
           },
         );

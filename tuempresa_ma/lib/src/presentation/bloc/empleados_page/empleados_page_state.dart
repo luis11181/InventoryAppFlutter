@@ -1,13 +1,18 @@
 import 'package:tuempresa_ma/src/domain/Empleado.dart';
 
-abstract class EmpleadosPageState {}
+abstract class EmpleadosListPageState {}
 
-class EmpleadosWaitingState implements EmpleadosPageState {}
-
-class EmpleadosInputState implements EmpleadosPageState {
-  EmpleadosInputState({
-    required this.empleados
-  });
+class EmpleadosListDisplayState implements EmpleadosListPageState {
+  EmpleadosListDisplayState({
+    required this.empleados, 
+    required this.empleadoName
+    });
 
   List<Empleado> empleados;
+  String empleadoName;
+}
+
+class EmpleadosPageWaitingState implements EmpleadosListPageState {
+  EmpleadosPageWaitingState({this.empleadoName = ""});
+  String empleadoName;
 }

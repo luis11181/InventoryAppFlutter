@@ -71,8 +71,7 @@ Future<dynamic> getProductInfo(String company, String barCode) async {
 }
 
 //* query to get the info inside the bodega
-Future<dynamic> getBodegaInfo(
-    String company, String barCode, String bodega) async {
+Future<dynamic> getBodegaInfo(String company, String barCode, String bodega) async {
   // Call the user's CollectionReference to add a new user
   var info;
   var result;
@@ -202,4 +201,27 @@ Future<List<Map<String, dynamic>>> getAllEmpleados(String company) async {
   } else {
     return [];
   }
+}
+
+Future<List<Map<String, dynamic>>> getEmpleados(String company, String name) async {
+  final info = await empresas
+      .doc(company)
+      .collection("empleados")
+      .where("name", isEqualTo: name)
+      .limit(15)
+      .get()
+      .catchError((error) => print("Failed to bring empleados: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
 }

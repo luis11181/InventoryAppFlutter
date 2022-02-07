@@ -79,24 +79,77 @@ class TransactionPageView extends StatelessWidget {
               ),
 
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: state is WaitingState
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListView(
-                          children: (state as DisplayTransactionListState)
-                              .transacciones
-                              .map((e) => Card(
-                                      child: ExpansionTile(
-                                    title: Text(' ${e.producto}  ${e.fecha}'),
-                                    children: [
-                                      Text('Cantidad: ${e.cantidad}'),
-                                      Text('Cliente: ${e.cliente}'),
-                                      Text('Responsable: ${e.empleado}'),
-                                    ],
-                                  )))
-                              .toList()) // state.transactions
-
-                  ),
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: state is WaitingState
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView(
+                        children: (state as DisplayTransactionListState)
+                            .transacciones
+                            .map((e) => Card(
+                                    child: ExpansionTile(
+                                  title: Text(' ${e.producto}  ${e.fecha}'),
+                                  children: [
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tCantidad: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.cantidad}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tCliente: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.cliente}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tResponsable: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.empleado}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [Text('')],
+                                    ),
+                                  ],
+                                )))
+                            .toList()), // state.transactions
+              ),
             ],
           );
         },
