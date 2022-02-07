@@ -1,24 +1,19 @@
-
 class Empleado {
-
   Empleado({
-  this.nombre = '',
-  this.apellido = '',
-  this.usuario = '',
-  this.correo = '',
+    required this.nombre,
+    required this.apellido,
+    required this.usuario,
+    required this.correo,
   });
 
-  String nombre;
-  String apellido;
-  String usuario;
-  String correo;
+  final String nombre;
+  final String apellido;
+  final String usuario;
+  final String correo;
 
-  factory Empleado.fromMap(Map<String, dynamic> map){
-    return Empleado(
-      nombre: map["name"],
-      apellido: map["lastName"],
-      correo: map["email"],
-      usuario: map["user"]
-    );
-  }
+  factory Empleado.fromJson(Map<String, dynamic> json) => Empleado(
+      nombre: json["name"],
+      apellido: json["lastName"],
+      correo: json["email"],
+      usuario: json["user"]);
 }

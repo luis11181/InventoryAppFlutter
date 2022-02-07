@@ -1,12 +1,8 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/productList_page_bloc/productList_page_cubit.dart';
 import 'package:tuempresa_ma/src/presentation/bloc/productList_page_bloc/productList_page_state.dart';
-
-import 'package:tuempresa_ma/src/presentation/theme_cubit.dart';
 
 class ProductListPageView extends StatelessWidget {
   ProductListPageView({Key? key}) : super(key: key);
@@ -75,32 +71,115 @@ class ProductListPageView extends StatelessWidget {
               ),
 
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: state is ProductPageWaitingState
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListView(
-                          children: (state as ProductListDisplayState)
-                              .products
-                              .map((e) => Card(
-                                      child: ExpansionTile(
-                                    title: Text(' ${e.nombre} '),
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('Cantidad: '),
-                                          Text('${e.cantidad}'),
-                                        ],
-                                      ),
-                                      Text('Descripción: ${e.descripcion}'),
-                                      Text('Precio: ${e.precio}'),
-                                      Text(
-                                          'Codigo de barras: ${e.productBarcode}'),
-                                      Text('Unidad: ${e.unidad}'),
-                                    ],
-                                  )))
-                              .toList()) // state.transactions
-
-                  ),
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: state is ProductPageWaitingState
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView(
+                        children: (state as ProductListDisplayState)
+                            .products
+                            .map((e) => Card(
+                                    child: ExpansionTile(
+                                  title: Text(' ${e.nombre} '),
+                                  children: [
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tCantidad: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.cantidad}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tDescripción: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(
+                                                  text: '${e.descripcion}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tPrecio: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.precio}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tCodigo de barras: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(
+                                                  text: '${e.productBarcode}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: '\tUnidad: ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: '${e.unidad}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [Text('')],
+                                    ),
+                                  ],
+                                )))
+                            .toList()), // state.transactions
+              ),
             ],
           );
         },
