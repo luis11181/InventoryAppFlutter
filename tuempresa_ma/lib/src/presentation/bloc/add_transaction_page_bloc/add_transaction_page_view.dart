@@ -196,6 +196,7 @@ class AddTransactionPageView extends StatelessWidget {
                           },
                           child: const Icon(Icons.remove),
                           mini: true,
+                          heroTag: null,
                         ),
                         FloatingActionButton(
                           onPressed: () {
@@ -203,6 +204,7 @@ class AddTransactionPageView extends StatelessWidget {
                           },
                           mini: true,
                           child: const Icon(Icons.add),
+                          heroTag: null,
                         )
                       ],
                     ),

@@ -71,7 +71,8 @@ Future<dynamic> getProductInfo(String company, String barCode) async {
 }
 
 //* query to get the info inside the bodega
-Future<dynamic> getBodegaInfo(String company, String barCode, String bodega) async {
+Future<dynamic> getBodegaInfo(
+    String company, String barCode, String bodega) async {
   // Call the user's CollectionReference to add a new user
   var info;
   var result;
@@ -86,7 +87,7 @@ Future<dynamic> getBodegaInfo(String company, String barCode, String bodega) asy
     print(e);
   });
 
-  if (info.exists) {
+  if (info != null) {
     Map<String, dynamic>? result = info.data();
 
     return result;
@@ -96,8 +97,63 @@ Future<dynamic> getBodegaInfo(String company, String barCode, String bodega) asy
 }
 
 //* query to get the info of products
-Future<List<Map<String, dynamic>>> getProducts(String company, String name) async {
-  
+Future<List<Map<String, dynamic>>> getAllbodegas(String company) async {
+  final info = await empresas
+      .doc(company)
+      .collection("bodegas")
+      .get()
+      .catchError((error) => print("Failed to bring products: $error"));
+
+  if (info != null) {
+    final List<Map<String, dynamic>> xx =
+        info.docs.map((doc) => doc.data()).toList();
+    //var xxx =info.docs.data();
+    return xx;
+  } else {
+    return [];
+  }
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+}
+
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getBodegas(
+    String company, String code) async {
+  Map producto = await getProductInfo(company, code);
+
+  if (producto != null && producto['nombre']?.toString() != null) {
+    String nombre = producto['nombre'];
+
+    final info = await empresas
+        .doc(company)
+        .collection("bodegas")
+        .where("code.nombre", isEqualTo: nombre)
+        .get()
+        .catchError((error) => print("Failed to bring products: $error"));
+
+    if (info != null) {
+      final List<Map<String, dynamic>> xx =
+          info.docs.map((doc) => doc.data()).toList();
+      //var xxx =info.docs.data();
+      return xx;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+
+  // .collection("productos")
+  //.orderBy('name', descending: true)
+  //.startAt(test)
+  //.endAt(test+'\uf8ff')
+}
+
+//* query to get the info of products
+Future<List<Map<String, dynamic>>> getProducts(
+    String company, String name) async {
   final info = await empresas
       .doc(company)
       .collection("productos")
@@ -121,7 +177,7 @@ Future<List<Map<String, dynamic>>> getProducts(String company, String name) asyn
 
 //* query to get the info of products
 Future<List<Map<String, dynamic>>> getAllProducts(String company) async {
- final info = await empresas
+  final info = await empresas
       .doc(company)
       .collection("productos")
       .get()
@@ -161,7 +217,8 @@ Future<List<Map<String, dynamic>>> getAllTransactions(String company) async {
 }
 
 //* query to get the info of products
-Future<List<Map<String, dynamic>>> getTransactions(String company, String producto) async {
+Future<List<Map<String, dynamic>>> getTransactions(
+    String company, String producto) async {
   final info = await empresas
       .doc(company)
       .collection("transacciones")
@@ -203,7 +260,8 @@ Future<List<Map<String, dynamic>>> getAllEmpleados(String company) async {
   }
 }
 
-Future<List<Map<String, dynamic>>> getEmpleados(String company, String name) async {
+Future<List<Map<String, dynamic>>> getEmpleados(
+    String company, String name) async {
   final info = await empresas
       .doc(company)
       .collection("empleados")
