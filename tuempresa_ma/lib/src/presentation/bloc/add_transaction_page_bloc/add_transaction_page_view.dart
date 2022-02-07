@@ -22,8 +22,6 @@ class AddTransactionPageView extends StatelessWidget {
       appBar: AppBar(title: const Text("Crea un nueva transacción")),
       body: BlocBuilder<AddTransactionPageCubit, AddTransactionPageState>(
         builder: (context, state) {
-          bool _value = false;
-          int val = -1;
           if (state is WaitingAddTransactionState) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -88,7 +86,7 @@ class AddTransactionPageView extends StatelessWidget {
                       children: [
                         Flexible(
                           child: ListTile(
-                            title: Text(
+                            title: const Text(
                               "Agregar",
                               style: TextStyle(fontSize: 12),
                             ),
@@ -106,8 +104,8 @@ class AddTransactionPageView extends StatelessWidget {
                         ),
                         Flexible(
                           child: ListTile(
-                            title: Text(
-                              "Remover",
+                            title: const Text(
+                              'Remover',
                               style: TextStyle(fontSize: 12),
                             ),
                             leading: Radio(
@@ -196,7 +194,7 @@ class AddTransactionPageView extends StatelessWidget {
                                 .read<AddTransactionPageCubit>()
                                 .removeButton();
                           },
-                          child: Icon(Icons.remove),
+                          child: const Icon(Icons.remove),
                           mini: true,
                         ),
                         FloatingActionButton(
@@ -204,7 +202,7 @@ class AddTransactionPageView extends StatelessWidget {
                             context.read<AddTransactionPageCubit>().addButton();
                           },
                           mini: true,
-                          child: Icon(Icons.add),
+                          child: const Icon(Icons.add),
                         )
                       ],
                     ),

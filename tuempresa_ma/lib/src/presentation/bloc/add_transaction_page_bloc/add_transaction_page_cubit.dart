@@ -129,7 +129,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         (state as InputTransactionInfoState).quantity * x,
         (state as InputTransactionInfoState).barCode,
         email,
-        (state as InputTransactionInfoState).barCode,
+        (state as InputTransactionInfoState).client,
         (state as InputTransactionInfoState).warehouse,
       );
 
