@@ -24,6 +24,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         barCode: code,
         client: (state as InputTransactionInfoState).client,
         quantity: (state as InputTransactionInfoState).quantity,
+        add: (state as InputTransactionInfoState).add,
         warehouse: (state as InputTransactionInfoState).warehouse,
       ));
     }
@@ -35,6 +36,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         barCode: (state as InputTransactionInfoState).barCode,
         client: client,
         quantity: (state as InputTransactionInfoState).quantity,
+        add: (state as InputTransactionInfoState).add,
         warehouse: (state as InputTransactionInfoState).warehouse,
       ));
     }
@@ -46,6 +48,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         barCode: (state as InputTransactionInfoState).barCode,
         client: (state as InputTransactionInfoState).client,
         quantity: (state as InputTransactionInfoState).quantity,
+        add: (state as InputTransactionInfoState).add,
         warehouse: warehouse,
       ));
     }
@@ -66,6 +69,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         barCode: (state as InputTransactionInfoState).barCode,
         client: (state as InputTransactionInfoState).client,
         quantity: int.parse(quantity),
+        add: (state as InputTransactionInfoState).add,
         warehouse: (state as InputTransactionInfoState).warehouse,
       ));
     }
@@ -76,7 +80,9 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
       InputTransactionInfoState(
         barCode: (state as InputTransactionInfoState).barCode,
         client: (state as InputTransactionInfoState).client,
+        add: (state as InputTransactionInfoState).add,
         quantity: (state as InputTransactionInfoState).quantity + 1,
+        warehouse: (state as InputTransactionInfoState).warehouse,
       ),
     );
   }
@@ -86,9 +92,11 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
       InputTransactionInfoState(
         barCode: (state as InputTransactionInfoState).barCode,
         client: (state as InputTransactionInfoState).client,
+        add: (state as InputTransactionInfoState).add,
         quantity: (state as InputTransactionInfoState).quantity > 1
             ? (state as InputTransactionInfoState).quantity - 1
             : 1,
+        warehouse: (state as InputTransactionInfoState).warehouse,
       ),
     );
   }
@@ -99,6 +107,8 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         barCode: (state as InputTransactionInfoState).barCode,
         client: (state as InputTransactionInfoState).client,
         quantity: (state as InputTransactionInfoState).quantity,
+        add: (state as InputTransactionInfoState).add,
+        warehouse: (state as InputTransactionInfoState).warehouse,
       ));
 
       final result = await Navigator.pushNamed(
@@ -111,6 +121,8 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
           barCode: result as String,
           client: (state as WaitingAddTransactionState).client,
           quantity: (state as WaitingAddTransactionState).quantity,
+          add: (state as WaitingAddTransactionState).add,
+          warehouse: (state as WaitingAddTransactionState).warehouse,
         ));
       }
     }
@@ -129,7 +141,7 @@ class AddTransactionPageCubit extends Cubit<AddTransactionPageState> {
         (state as InputTransactionInfoState).quantity * x,
         (state as InputTransactionInfoState).barCode,
         email,
-        (state as InputTransactionInfoState).barCode,
+        (state as InputTransactionInfoState).client,
         (state as InputTransactionInfoState).warehouse,
       );
 
