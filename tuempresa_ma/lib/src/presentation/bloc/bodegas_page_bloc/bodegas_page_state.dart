@@ -3,7 +3,7 @@ abstract class BodegasPageState {}
 class BodegasWaitingState implements BodegasPageState {}
 
 class BodegasShowState implements BodegasPageState {
-  List<String> bodegas;
+  List bodegas;
 
   BodegasShowState({
     required this.bodegas,
@@ -11,7 +11,7 @@ class BodegasShowState implements BodegasPageState {
 }
 
 class BodegasCreateState implements BodegasPageState {
-  List<String> bodegas;
+  List bodegas;
   String nueva_bodega;
 
   BodegasCreateState({

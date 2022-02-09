@@ -1,25 +1,38 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:tuempresa_ma/src/data/createFirestore.dart';
+import 'package:tuempresa_ma/src/data/queriesFirestore.dart';
 import 'bodegas_page_state.dart';
 
 class BodegasPageCubit extends Cubit<BodegasPageState> {
   BodegasPageCubit() : super(BodegasWaitingState());
 
-  Future<void> getBodegas(BuildContext context) async{
+  Future<void> newBodegas(BuildContext context) async{
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     String company = args["company"].toString();
 
-    List<Map<String, dynamic>> mapa = await getAllBodegas(company);
+    crearBodega(company, (state as BodegasCreateState).nueva_bodega);
   }
 
-  void changeToCreate(){
-    //Funcion para traer de firestore la lista de bodegas
-    emit(BodegasCreateState(bodegas: (state as BodegasShowState).bodegas, nueva_bodega: ""));
+  void changeToCreate(BuildContext context) async{
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    String company = args["company"].toString();
+
+    List<Map<String, dynamic>> mapa = await getAllbodegas(company);
+    List lista = mapa.map((e) => e["name"]).toList();
+
+    emit(BodegasCreateState(bodegas: lista, nueva_bodega: ""));
   }
 
-  void changeToShow(){
-    //Funcion para traer de firestore la lista de bodegas
-    emit(BodegasShowState(bodegas: (state as BodegasCreateState).bodegas));
+  void changeToShow(BuildContext context) async{
+
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    String company = args["company"].toString();
+
+    List<Map<String, dynamic>> mapa = await getAllbodegas(company);
+    List lista = mapa.map((e) => e["name"]).toList();
+
+    emit(BodegasShowState(bodegas: lista));
   }
 
   void inputBodega(String bodega){
