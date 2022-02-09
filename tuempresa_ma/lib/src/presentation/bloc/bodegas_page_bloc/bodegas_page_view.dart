@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuempresa_ma/src/presentation/theme_cubit.dart';
 
 import 'bodegas_page_cubit.dart';
 import 'bodegas_page_state.dart';
@@ -19,48 +18,57 @@ class BodegasPageView extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Lista de bodegas"),),
+      appBar: AppBar(
+        title: const Text("Lista de bodegas"),
+      ),
       body: BlocBuilder<BodegasPageCubit, BodegasPageState>(
         builder: (context, state) {
-
-          if (state is BodegasWaitingState){
+          if (state is BodegasWaitingState) {
             context.read<BodegasPageCubit>().changeToShow(context);
             return const Center(child: CircularProgressIndicator());
           }
 
-          if(state is BodegasShowState){
-
-            if(state.bodegas.isEmpty){
-
+          if (state is BodegasShowState) {
+            if (state.bodegas.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Crea una nueva bodega"),
-                  SizedBox(height: 20,),
-                  FloatingActionButton(
-                    onPressed:(){
-                      context.read<BodegasPageCubit>().changeToCreate(context);
-                    }, child: const Icon(Icons.add),
-                  )
-                ],
+                  children: [
+                    const Text("Crea una nueva bodega"),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    FloatingActionButton(
+                      onPressed: () {
+                        context
+                            .read<BodegasPageCubit>()
+                            .changeToCreate(context);
+                      },
+                      child: const Icon(Icons.add),
+                    )
+                  ],
                 ),
               );
-            }else{
+            } else {
               return ListView(
                 children: [
-                   ...state.bodegas.map((e) => Card(
-                     child: ListTile(
-                       title: Text(e),
-                     ),
-                   )).toList(),
+                  ...state.bodegas
+                      .map((e) => Card(
+                            child: ListTile(
+                              title: Text(e),
+                            ),
+                          ))
+                      .toList(),
                   ...[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(160, 0, 160, 0),
                       child: ElevatedButton(
-                        onPressed:(){
-                          context.read<BodegasPageCubit>().changeToCreate(context);
-                        }, child: const Icon(Icons.add)),
+                          onPressed: () {
+                            context
+                                .read<BodegasPageCubit>()
+                                .changeToCreate(context);
+                          },
+                          child: const Icon(Icons.add)),
                     )
                   ]
                 ],
@@ -68,23 +76,23 @@ class BodegasPageView extends StatelessWidget {
             }
           }
 
-          return ListView(
-            children:  [
-              ...(state as BodegasCreateState).bodegas.map((e) 
-              => Card(
-                child: ListTile(
-                  title: Text(e),
-                ),
-              )).toList(),
-              ...[
+          return ListView(children: [
+            ...(state as BodegasCreateState)
+                .bodegas
+                .map((e) => Card(
+                      child: ListTile(
+                        title: Text(e),
+                      ),
+                    ))
+                .toList(),
+            ...[
               ListTile(
                 title: TextField(
-                  onChanged: (text){
+                  onChanged: (text) {
                     context.read<BodegasPageCubit>().inputBodega(text);
                   },
-                  decoration: const InputDecoration(
-                      labelText: "Nombre de la bodega"
-                  ),
+                  decoration:
+                      const InputDecoration(labelText: "Nombre de la bodega"),
                 ),
               ),
               Padding(
@@ -93,23 +101,28 @@ class BodegasPageView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                        onPressed: (){
-                          context.read<BodegasPageCubit>().changeToShow(context);
+                        onPressed: () {
+                          context
+                              .read<BodegasPageCubit>()
+                              .changeToShow(context);
                         },
                         child: const Icon(Icons.clear)),
-                    SizedBox(width: 20,),
+                    SizedBox(
+                      width: 20,
+                    ),
                     ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           context.read<BodegasPageCubit>().newBodegas(context);
-                          context.read<BodegasPageCubit>().changeToShow(context);
+                          context
+                              .read<BodegasPageCubit>()
+                              .changeToShow(context);
                         },
                         child: const Icon(Icons.done))
                   ],
                 ),
               )
-              ],
-            ]
-          );
+            ],
+          ]);
         },
       ),
     );
