@@ -43,15 +43,12 @@ Future<void> transaccion(String company, int cantidad, String code,
 
   var noExiste = true;
 
-
   if (infoBodega != null) {
+    print(infoBodega);
 
-  print(infoBodega);
-  
-  infoBodega.forEach((k,v){ 
-    //
+    infoBodega.forEach((k, v) {
+      //
       if (k == code) {
-
         noExiste = false;
 
         empresas
@@ -65,25 +62,25 @@ Future<void> transaccion(String company, int cantidad, String code,
             .catchError((error) => print(
                 "Failed to updated bodegas table fro transactionr: $error"));
       }
-
-    }); 
-
+    });
   }
 
-    if (noExiste) {
-      empresas
-          .doc(company)
-          .collection("bodegas")
-          .doc(bodega)
-          .set({
-             code:{
-              'cantidad': cantidad, 'nombre': producInfo['nombre']}
-            
-          }, SetOptions(merge: true))
-          .then((value) => print("updated bodegas table fro transaction"))
-          .catchError((error) => print(
-              "Failed to updated bodegas table fro transactionr: $error"));
-    }
+  if (noExiste) {
+    empresas
+        .doc(company)
+        .collection("bodegas")
+        .doc(bodega)
+        .set({
+          code: {
+            'cantidad': cantidad,
+            'nombre': producInfo['nombre'],
+            'bodega': bodega
+          }
+        }, SetOptions(merge: true))
+        .then((value) => print("updated bodegas table fro transaction"))
+        .catchError((error) =>
+            print("Failed to updated bodegas table fro transactionr: $error"));
+  }
 
   return;
 }
@@ -107,6 +104,17 @@ Future<void> crearProduct(String company, String code, String name,
         },
         SetOptions(merge: true), // previous data is not deleted
       )
+      .then((value) => print("'full_name' & 'age' merged with existing data!"))
+      .catchError((error) => print("Failed to merge data: $error"));
+}
+
+Future<void> crearBodega(String company, String name) async {
+  return empresas
+      // existing document in 'users' collection: "ABC123"
+      .doc(company)
+      .collection("bodegas")
+      .doc(name)
+      .set({"name": name})
       .then((value) => print("'full_name' & 'age' merged with existing data!"))
       .catchError((error) => print("Failed to merge data: $error"));
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuempresa_ma/src/presentation/theme_cubit.dart';
 
 import 'bodegas_page_cubit.dart';
 import 'bodegas_page_state.dart';
@@ -19,69 +18,112 @@ class BodegasPageView extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Lista de bodegas"),),
+      appBar: AppBar(
+        title: const Text("Lista de bodegas"),
+      ),
       body: BlocBuilder<BodegasPageCubit, BodegasPageState>(
         builder: (context, state) {
-          return state is BodegasWaitingState
-              ? const Center(
-            child: CircularProgressIndicator(),
-          )
-              : ListView(
-            children:[
+          if (state is BodegasWaitingState) {
+            context.read<BodegasPageCubit>().changeToShow(context);
+            return const Center(child: CircularProgressIndicator());
+          }
 
-              !(state as BodegasInputState).nuevo ? ElevatedButton(
-                  onPressed: (){
-                    (state as BodegasPageCubit).createwindow(true);
-                    },
-                  child: const Icon(Icons.add)) :
-                  Column(
-                    children: [
-                      Flexible(
-                        child: Row(
-                          children:
-                          [
-                            TextField(
-                              decoration: const InputDecoration(
-                                labelText: "Nombre de la bodega"
-                              ),
-                              onChanged: (text){},
+          if (state is BodegasShowState) {
+            if (state.bodegas.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Crea una nueva bodega"),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    FloatingActionButton(
+                      onPressed: () {
+                        context
+                            .read<BodegasPageCubit>()
+                            .changeToCreate(context);
+                      },
+                      child: const Icon(Icons.add),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return ListView(
+                children: [
+                  ...state.bodegas
+                      .map((e) => Card(
+                            child: ListTile(
+                              title: Text(e),
                             ),
-                            const SizedBox(width: 100),
-                            TextField(
-                              decoration: const InputDecoration(
-                                labelText: "Dirección"
-                              ),
-                              onChanged: (text){},
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 20,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(onPressed: () {
-
+                          ))
+                      .toList(),
+                  ...[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(160, 0, 160, 0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<BodegasPageCubit>()
+                                .changeToCreate(context);
                           },
-                              child: const Icon(Icons.done)
-                          ),
-                          ElevatedButton(onPressed: (){
+                          child: const Icon(Icons.add)),
+                    )
+                  ]
+                ],
+              );
+            }
+          }
 
-                          },
-                              child: const Icon(Icons.clear)
-                          )
-                        ],
+          return ListView(children: [
+            ...(state as BodegasCreateState)
+                .bodegas
+                .map((e) => Card(
+                      child: ListTile(
+                        title: Text(e),
                       ),
-                    ],
-                  )
+                    ))
+                .toList(),
+            ...[
+              ListTile(
+                title: TextField(
+                  onChanged: (text) {
+                    context.read<BodegasPageCubit>().inputBodega(text);
+                  },
+                  decoration:
+                      const InputDecoration(labelText: "Nombre de la bodega"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<BodegasPageCubit>()
+                              .changeToShow(context);
+                        },
+                        child: const Icon(Icons.clear)),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          context.read<BodegasPageCubit>().newBodegas(context);
+                          context
+                              .read<BodegasPageCubit>()
+                              .changeToShow(context);
+                        },
+                        child: const Icon(Icons.done))
+                  ],
+                ),
+              )
             ],
-          );
+          ]);
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.brightness_6),
-        mini: true,
-        onPressed: () => context.read<ThemeCubit>().toggleTheme(),
       ),
     );
   }

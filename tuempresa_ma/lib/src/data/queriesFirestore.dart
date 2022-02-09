@@ -278,8 +278,4 @@ Future<List<Map<String, dynamic>>> getEmpleados(
   } else {
     return [];
   }
-  // .collection("productos")
-  //.orderBy('name', descending: true)
-  //.startAt(test)
-  //.endAt(test+'\uf8ff')
 }
