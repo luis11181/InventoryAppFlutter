@@ -19,7 +19,29 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Homepage'), automaticallyImplyLeading: false),
+        title: Text('Homepage'),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return {'Logout'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  onTap: () => Navigator.pop(context),
+                  value: choice,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.red,
+                      ),
+                      Text(choice),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
