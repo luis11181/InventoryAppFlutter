@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../domain/bodega.dart';
+
 //! ------------------------- FUNCIONES PARA OBTENER INFORMACION DEL USUARIO
 //* query to get the company name from the email of a specific user
 Future<dynamic> getCompanyName(String email) async {
@@ -105,8 +107,7 @@ Future<List<Map<String, dynamic>>> getAllbodegas(String company) async {
       .catchError((error) => print("Failed to bring products: $error"));
 
   if (info != null) {
-    final List<Map<String, dynamic>> xx =
-        info.docs.map((doc) => doc.data()).toList();
+    final xx = info.docs.map((doc) => doc.data()).toList();
     //var xxx =info.docs.data();
     return xx;
   } else {

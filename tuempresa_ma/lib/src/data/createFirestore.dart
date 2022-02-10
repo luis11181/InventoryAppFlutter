@@ -114,7 +114,13 @@ Future<void> crearBodega(String company, String name) async {
       .doc(company)
       .collection("bodegas")
       .doc(name)
-      .set({"name": name})
+      .set({
+        'codePrueba': {
+          'cantidad': 0,
+          'nombre': 'producto prueba',
+          'bodega': name
+        }
+      }, SetOptions(merge: true))
       .then((value) => print("'full_name' & 'age' merged with existing data!"))
       .catchError((error) => print("Failed to merge data: $error"));
 }

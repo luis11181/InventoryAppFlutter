@@ -50,15 +50,10 @@ class BodegasPageView extends StatelessWidget {
                 ),
               );
             } else {
+              //return SizedBox();
               return ListView(
                 children: [
-                  ...state.bodegas
-                      .map((e) => Card(
-                            child: ListTile(
-                              title: Text(e),
-                            ),
-                          ))
-                      .toList(),
+                  ...state.bodegas.map((e) => cartBodega(e, context)).toList(),
                   ...[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(160, 0, 160, 0),
@@ -77,14 +72,15 @@ class BodegasPageView extends StatelessWidget {
           }
 
           return ListView(children: [
-            ...(state as BodegasCreateState)
-                .bodegas
-                .map((e) => Card(
-                      child: ListTile(
-                        title: Text(e),
-                      ),
-                    ))
-                .toList(),
+            Card(
+              child: ListTile(
+                title: Text(
+                  'Creando bodega',
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
             ...[
               ListTile(
                 title: TextField(
@@ -125,6 +121,44 @@ class BodegasPageView extends StatelessWidget {
           ]);
         },
       ),
+    );
+  }
+
+  Card cartBodega(e, BuildContext context) {
+    return Card(
+        child: ExpansionTile(
+      title: Text(' ${e.first['bodega']}'),
+      children: [
+        ListView.builder(
+            physics: ClampingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: e.length,
+            itemBuilder: (BuildContext context, int index) {
+              return vistaProductos(context, e[index]);
+            })
+      ],
+    ));
+  }
+
+  Row vistaProductos(BuildContext context, producto) {
+    return Row(
+      children: [
+        RichText(
+          text: TextSpan(
+            style: DefaultTextStyle.of(context).style,
+            children: <TextSpan>[
+              TextSpan(
+                  text: '\tCantidad: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextSpan(text: '${producto['cantidad']}'),
+              TextSpan(
+                  text: '\tProducto: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextSpan(text: '${producto['nombre']}'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
